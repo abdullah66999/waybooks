@@ -18,6 +18,7 @@
 
 /* токены сняты с src/styles/global.css — лендинг обязан выглядеть как то же приложение */
 :root{
+  color-scheme:dark;
   --bg:#0b0b0f; --bg-elev:#131319; --surface:#17171f; --surface-2:#1e1e28;
   --card:rgba(255,255,255,.045); --card-strong:rgba(255,255,255,.08);
   --stroke:rgba(255,255,255,.09); --stroke-strong:rgba(255,255,255,.16);
@@ -163,9 +164,20 @@ h2{
 .stat .l{margin-top:8px;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-faint)}
 
 /* ——— полка обложек */
-.shelf{display:flex;gap:14px;overflow-x:auto;padding:6px 0 22px;scroll-snap-type:x mandatory;scrollbar-width:thin}
-.shelf::-webkit-scrollbar{height:7px}
-.shelf::-webkit-scrollbar-thumb{background:var(--stroke-strong);border-radius:99px}
+/* scrollbar-width/scrollbar-color отключают ::-webkit-scrollbar: с ними Chrome рисует нативную
+   полосу с кнопками-стрелками. Поэтому здесь полоска своя, а стандартные свойства — только
+   для Firefox, где псевдоэлементов webkit нет */
+.shelf{
+  display:flex;gap:14px;overflow-x:auto;padding:6px 0 22px;scroll-snap-type:x mandatory;
+}
+.shelf::-webkit-scrollbar{height:8px}
+.shelf::-webkit-scrollbar-track{background:transparent}
+.shelf::-webkit-scrollbar-button{display:none;width:0;height:0}
+.shelf::-webkit-scrollbar-thumb{background:rgba(217,196,163,.3);border-radius:99px}
+.shelf:hover::-webkit-scrollbar-thumb{background:rgba(217,196,163,.5)}
+@supports not selector(::-webkit-scrollbar){
+  .shelf{scrollbar-width:thin;scrollbar-color:rgba(217,196,163,.28) transparent}
+}
 .shelf img{width:132px;height:198px;border-radius:12px;flex:none;scroll-snap-align:start;box-shadow:var(--shadow-card)}
 
 /* ——— установка */
