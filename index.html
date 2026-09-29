@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>WayBooks — офлайн-читалка на Android</title>
+<meta name="description" content="WayBooks — читалка, которая работает без интернета: 104 полных текстов встроено, свои обложки, EPUB, FB2, PDF и TXT, четыре темы и счётчик страниц. Скачать APK на Android." />
+<meta name="theme-color" content="#0b0b0f" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preload" as="image" href="assets/shots/home.jpg" />
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/inter-cyr.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/inter-lat.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2013-2014,U+2191,U+2113,U+2122}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/inter-cyr.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/inter-lat.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2013-2014,U+2191,U+2113,U+2122}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/inter-cyr.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/inter-lat.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2013-2014,U+2191,U+2113,U+2122}
+
+/* токены сняты с src/styles/global.css — лендинг обязан выглядеть как то же приложение */
+:root{
+  --bg:#0b0b0f; --bg-elev:#131319; --surface:#17171f; --surface-2:#1e1e28;
+  --card:rgba(255,255,255,.045); --card-strong:rgba(255,255,255,.08);
+  --stroke:rgba(255,255,255,.09); --stroke-strong:rgba(255,255,255,.16);
+  --text:#f4f4f6; --text-dim:#a2a2ad; --text-faint:#6c6c78;
+  --accent:#7c6cff; --accent-2:#b39bff; --accent-glow:rgba(124,108,255,.45);
+  --gold:#d9c4a3;
+  --radius-sm:12px; --radius:18px; --radius-lg:26px; --radius-xl:34px;
+  --shadow-card:0 10px 30px rgba(0,0,0,.45); --shadow-float:0 18px 50px rgba(0,0,0,.55);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --maxw:1120px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:#05050a;color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:-20% -10% auto;height:70vh;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60% 55% at 20% 25%, rgba(124,108,255,.20), transparent 70%),
+    radial-gradient(45% 45% at 82% 8%, rgba(217,196,163,.10), transparent 72%);
+  filter:blur(6px);
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding-inline:20px}
+
+/* ——— шапка */
+.top{
+  position:sticky;top:0;z-index:20;
+  background:rgba(11,11,15,.72);backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid var(--stroke);
+}
+.top-in{display:flex;align-items:center;gap:14px;max-width:var(--maxw);margin:0 auto;padding:12px 20px}
+.top-logo{width:44px;height:44px;object-fit:contain;flex:none;filter:drop-shadow(0 6px 16px rgba(0,0,0,.55))}
+.wordmark{
+  font-family:Georgia,'Times New Roman',serif;font-weight:700;font-size:23px;letter-spacing:.5px;line-height:1.05;
+  background:linear-gradient(180deg,#f2e0c3 0%,#d9c4a3 55%,#b3936a 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.tagline{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-faint);margin-top:2px}
+.top-nav{display:flex;gap:8px;margin-left:auto}
+.top-nav a{
+  padding:9px 14px;border-radius:999px;font-size:14px;color:var(--text-dim);
+  transition:color .25s var(--ease),background .25s var(--ease);
+}
+.top-nav a:hover{color:var(--text);background:var(--card)}
+.top-cta{
+  margin-left:auto;padding:11px 18px;border-radius:999px;font-size:14.5px;font-weight:600;white-space:nowrap;
+  background:linear-gradient(135deg,var(--accent) 0%,#9b8bff 55%,var(--accent-2) 100%);color:#fff;
+  box-shadow:0 10px 26px var(--accent-glow);transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+}
+.top-cta:hover{transform:translateY(-1px);box-shadow:0 16px 34px var(--accent-glow)}
+@media (max-width:900px){.top-nav{display:none}}
+
+/* ——— герой */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center;padding-block:74px 64px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;
+  background:var(--card);border:1px solid var(--stroke);font-size:12.5px;letter-spacing:.6px;color:var(--gold);
+}
+h1{
+  font-family:Georgia,'Times New Roman',serif;font-weight:700;letter-spacing:-.5px;line-height:1.06;
+  font-size:clamp(34px,5.2vw,58px);margin:20px 0 0;
+}
+h1 em{font-style:normal;background:linear-gradient(180deg,#f2e0c3,#b3936a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:clamp(15.5px,1.6vw,18px);color:var(--text-dim);margin:18px 0 0;max-width:52ch}
+.cta-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px}
+.btn-dl{
+  display:inline-flex;align-items:center;gap:11px;padding:16px 28px;border-radius:999px;
+  font-size:17px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,var(--accent) 0%,#9b8bff 55%,var(--accent-2) 100%);
+  box-shadow:0 16px 40px var(--accent-glow);transition:transform .28s var(--ease),box-shadow .28s var(--ease);
+}
+.btn-dl:hover{transform:translateY(-2px);box-shadow:0 24px 54px var(--accent-glow)}
+.btn-dl svg{width:20px;height:20px}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:9px;padding:15px 22px;border-radius:999px;
+  background:var(--card);border:1px solid var(--stroke);font-size:15.5px;font-weight:600;color:var(--text);
+  transition:background .25s var(--ease),border-color .25s var(--ease);
+}
+.btn-ghost:hover{background:var(--card-strong);border-color:var(--stroke-strong)}
+.dl-note{font-size:13px;color:var(--text-faint);margin-top:14px}
+.dl-note b{color:var(--text-dim);font-weight:600}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.chip{
+  padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--stroke);
+  font-size:13px;color:var(--text-dim);
+}
+.chip b{color:var(--text);font-weight:600}
+
+/* телефон-витрина */
+.phone{
+  position:relative;width:min(330px,86vw);margin:0 auto;padding:12px;border-radius:44px;
+  background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
+  border:1px solid var(--stroke-strong);box-shadow:var(--shadow-float),0 0 90px rgba(124,108,255,.16);
+}
+.phone::after{
+  content:"";position:absolute;left:50%;top:20px;transform:translateX(-50%);width:96px;height:22px;border-radius:999px;background:#05050a;
+}
+.phone img{border-radius:33px;display:block;width:100%}
+@media (max-width:960px){.hero{grid-template-columns:1fr;gap:38px;padding-block:44px 40px}}
+
+/* ——— заголовки секций */
+.section{padding-block:62px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
+h2{
+  font-family:Georgia,'Times New Roman',serif;font-weight:700;font-size:clamp(25px,3.1vw,36px);letter-spacing:-.3px;margin:0;line-height:1.15;
+}
+.section-head p{margin:0;color:var(--text-dim);font-size:15px;max-width:44ch}
+.ornament{display:flex;align-items:center;gap:12px;margin:0 0 30px}
+.ornament .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(217,196,163,.45),transparent)}
+.ornament .glyph{font-size:13px;color:var(--gold);opacity:.85}
+
+/* ——— карточки возможностей */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:16px}
+.card{
+  position:relative;padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--stroke);
+  box-shadow:var(--shadow-card);overflow:hidden;transition:transform .3s var(--ease),border-color .3s var(--ease);
+}
+.card::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 80% at 0% 0%,rgba(255,255,255,.07),transparent 60%);
+}
+.card:hover{transform:translateY(-3px);border-color:var(--stroke-strong)}
+.card .ico{
+  width:42px;height:42px;border-radius:13px;display:grid;place-items:center;margin-bottom:15px;
+  background:linear-gradient(140deg,rgba(124,108,255,.22),rgba(179,155,255,.08));border:1px solid rgba(179,155,255,.24);color:var(--accent-2);
+}
+.card .ico svg{width:21px;height:21px}
+.card h3{margin:0 0 8px;font-size:17.5px;font-weight:600}
+.card p{margin:0;font-size:14.5px;color:var(--text-dim);line-height:1.6}
+
+/* —--- цифры */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:18px}
+.stat{padding:22px 20px;border-radius:var(--radius);background:var(--card);border:1px solid var(--stroke);text-align:center}
+.stat .n{
+  font-family:Georgia,serif;font-size:clamp(26px,3.4vw,34px);font-weight:700;line-height:1;
+  background:linear-gradient(180deg,#f2e0c3,#b3936a);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat .l{margin-top:8px;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-faint)}
+
+/* ——— полка обложек */
+.shelf{display:flex;gap:14px;overflow-x:auto;padding:6px 0 22px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.shelf::-webkit-scrollbar{height:7px}
+.shelf::-webkit-scrollbar-thumb{background:var(--stroke-strong);border-radius:99px}
+.shelf img{width:132px;height:198px;border-radius:12px;flex:none;scroll-snap-align:start;box-shadow:var(--shadow-card)}
+
+/* ——— витрина читалки */
+.showcase{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;align-items:start}
+.shot{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--stroke);background:var(--surface);box-shadow:var(--shadow-float)}
+.shot img{width:100%;display:block}
+.shot figcaption{padding:13px 16px;font-size:13.5px;color:var(--text-dim);border-top:1px solid var(--stroke)}
+.bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.bullets li{display:flex;gap:12px;font-size:15px;color:var(--text-dim);line-height:1.55}
+.bullets .tick{
+  flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;margin-top:1px;
+  background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.3);color:#34d399;font-size:12px;
+}
+.bullets b{color:var(--text);font-weight:600}
+
+/* ——— установка */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;counter-reset:s}
+.step{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--stroke)}
+.step .num{
+  width:34px;height:34px;border-radius:11px;display:grid;place-items:center;margin-bottom:14px;font-weight:700;font-size:15px;
+  background:linear-gradient(140deg,var(--accent),var(--accent-2));color:#fff;box-shadow:0 8px 20px var(--accent-glow);
+}
+.step h3{margin:0 0 7px;font-size:16.5px;font-weight:600}
+.step p{margin:0;font-size:14.5px;color:var(--text-dim)}
+.step code{background:var(--surface-2);border:1px solid var(--stroke);border-radius:7px;padding:1px 7px;font-size:13px}
+.warn{
+  margin-top:18px;padding:16px 18px;border-radius:var(--radius);font-size:14.5px;color:var(--text-dim);
+  background:rgba(217,196,163,.06);border:1px solid rgba(217,196,163,.2);
+}
+.warn b{color:var(--gold)}
+
+/* ——— FAQ */
+.faq{display:flex;flex-direction:column;gap:10px}
+details{border-radius:var(--radius);background:var(--card);border:1px solid var(--stroke);overflow:hidden}
+details[open]{border-color:var(--stroke-strong);background:var(--card-strong)}
+summary{
+  list-style:none;cursor:pointer;padding:18px 20px;font-size:15.5px;font-weight:600;display:flex;align-items:center;gap:12px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;color:var(--accent-2);font-size:19px;font-weight:400;transition:transform .25s var(--ease)}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0;padding:0 20px 18px;font-size:14.5px;color:var(--text-dim);line-height:1.65}
+
+/* ——— финальный призыв и подвал */
+.final{
+  margin-top:20px;padding:44px 30px;border-radius:var(--radius-xl);text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(160deg,rgba(124,108,255,.16),rgba(255,255,255,.03));border:1px solid var(--stroke-strong);
+  box-shadow:var(--shadow-float);
+}
+.final h2{margin-bottom:10px}
+.final p{color:var(--text-dim);margin:0 auto 26px;max-width:46ch;font-size:15.5px}
+footer{padding:40px 0 46px;color:var(--text-faint);font-size:13.5px}
+footer .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+footer .wordmark{font-size:17px}
+@media (max-width:600px){.section{padding-block:46px}.section-head{flex-direction:column;align-items:flex-start;gap:12px}.cta-row{flex-direction:column;align-items:stretch}.btn-dl,.btn-ghost{justify-content:center}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <img class="top-logo" src="assets/logo.png" alt="WayBooks" width="44" height="44" />
+    <div>
+      <div class="wordmark">WayBooks</div>
+      <div class="tagline">вай библиотека</div>
+    </div>
+    <nav class="top-nav">
+      <a href="#features">Возможности</a>
+      <a href="#library">Библиотека</a>
+      <a href="#reader">Читалка</a>
+      <a href="#install">Как установить</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a class="top-cta" href="download/WayBooks-1.1.apk" download>Скачать</a>
+  </div>
+</header>
+
+<main>
+<section class="wrap hero">
+  <div>
+    <span class="eyebrow">◆ Офлайн-читалка для Android</span>
+    <h1>Книги&nbsp;— с&nbsp;собой.<br /><em>Интернет не&nbsp;нужен.</em></h1>
+    <p class="lede">WayBooks — читалка без магазина, без подписки и без облака: 104 полных текстов уже лежат внутри приложения, а свои книги можно докинуть файлами. Всё работает в самолёте, в метро и в горах.</p>
+    <div class="cta-row">
+      <a class="btn-dl" href="download/WayBooks-1.1.apk" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+        Скачать на Android
+      </a>
+      <a class="btn-ghost" href="#library">Посмотреть библиотеку</a>
+    </div>
+    <div class="dl-note"><b>19.5 МБ</b> · APK · версия 1.1 · Android 5.1 и новее · без рекламы и трекеров</div>
+    <div class="chip-row">
+      <span class="chip"><b>104</b> книг встроено</span>
+      <span class="chip"><b>51 891</b> страниц</span>
+      <span class="chip">EPUB · FB2 · PDF · TXT</span>
+      <span class="chip">4 темы чтения</span>
+    </div>
+  </div>
+  <figure class="phone">
+    <img src="assets/shots/home.jpg" width="306" height="664" alt="Главный экран WayBooks: полки книг и жанры" loading="eager" />
+  </figure>
+</section>
+
+<section class="wrap section" id="features">
+  <div class="section-head">
+    <h2>Что внутри</h2>
+    <p>Не «ещё одна читалка», а конкретные вещи, которые видно при первом же открытии.</p>
+  </div>
+  <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
+  <div class="grid">
+    <article class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 016.5 3H12v18H6.5A2.5 2.5 0 014 18.5z"/><path d="M20 5.5A2.5 2.5 0 0017.5 3H12v18h5.5A2.5 2.5 0 0020 18.5z"/></svg></div>
+      <h3>Полные тексты, а не обрывки</h3>
+      <p>Каждая книга — произведение целиком, разбитое на главы. Никаких «глава 1 из 3», демо-заглушек и кусков из превью магазина.</p>
+    </article>
+    <article class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3.5v5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5v-5z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3>Работает без сети</h3>
+      <p>Ни одного запроса наружу во время чтения. Библиотека, прогресс, закладки и настройки живут в памяти телефона.</p>
+    </article>
+    <article class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></div>
+      <h3>Свои книги: EPUB, FB2, PDF, TXT</h3>
+      <p>Файл добавляется прямо в приложение — с оглавлением, обложкой и автором там, где они есть в формате. Прогресс по импортированным книгам сохраняется.</p>
+    </article>
+    <article class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></div>
+      <h3>Обложки рисует сам</h3>
+      <p>У каждой книги — собственная векторная обложка в едином стиле: орнамент по жанру, золотая рамка, название целиком внутри рамки. Полка выглядит полкой, а не свалкой превью.</p>
+    </article>
+    <article class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/><path d="M3.5 12h17"/></svg></div>
+      <h3>Четыре темы и живой шрифт</h3>
+      <p>Светлая, сепия, тёмная и чёрная. Кегль в пунктах, гарнитура, межстрочный интервал и поля — настраиваются и запоминаются для каждой книги отдельно.</p>
+    </article>
+    <article class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v17l-6-4-6 4z"/></svg></div>
+      <h3>Честный счётчик страниц</h3>
+      <p>«Стр. 42 из 318» считается по реально свёрстанным полосам, а не по среднему арифметическому. Закладки, заметки с привязкой к месту и оглавление — в один тап.</p>
+    </article>
+  </div>
+</section>
+
+<section class="wrap section" id="library">
+  <div class="section-head">
+    <h2>Библиотека</h2>
+    <p>Три жанра, 17 подкатегорий, от русской классики до вайнахских сказок и исламских трактатов.</p>
+  </div>
+  <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
+  <div class="stats">
+    <div class="stat"><div class="n">104</div><div class="l">книг встроено</div></div>
+    <div class="stat"><div class="n">51 891</div><div class="l">страниц</div></div>
+    <div class="stat"><div class="n">2 845</div><div class="l">разделов и глав</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">жанра</div></div>
+  </div>
+  <div class="chip-row" style="margin-top:22px"><span class="chip"><b>48</b> · Русская литература</span> <span class="chip"><b>16</b> · Вайнахская литература</span> <span class="chip"><b>40</b> · Исламская литература</span></div>
+  <div class="shelf">
+    <img src="assets/covers/rp-pi-n.svg" alt="Обложка «Преступление и наказание»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-karenin.svg" alt="Обложка «Анна Каренина»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-ottsy.svg" alt="Обложка «Отцы и дети»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-kapitanskaya.svg" alt="Обложка «Капитанская дочка»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-geroy.svg" alt="Обложка «Герой нашего времени»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-skazki-1973.svg" alt="Обложка «Чеченские и ингушские народные сказки (1973)»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-narodnye.svg" alt="Обложка «Чеченские народные сказки»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-tuyranash.svg" alt="Обложка «Нохчийн туьйранаш: чеченские сказки»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-levndash.svg" alt="Обложка «Дух вайнахов: предания и легенды»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-yandarbiev.svg" alt="Обложка «Лаьмнаш: стихи»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/is-oproverzhenie-dzhahmitov.svg" alt="Обложка «Опровержение взглядов джахмитов»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/is-veroubezhdenie-pervyh-pokoleniy.svg" alt="Обложка «Вероубеждение первых поколений мусульман»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/is-edinobozhie-kak-sut-very.svg" alt="Обложка «Единобожие как суть веры в Аллаха»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/is-poslanniki-i-proroki.svg" alt="Обложка «Посланники и пророки в свете Ислама»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/is-slova-edinobozhiya.svg" alt="Обложка «Слова Единобожия «ля иляха илля Ллах»»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/is-dokazatelstva-edinobozhiya.svg" alt="Обложка «Доказательства единобожия»" width="132" height="198" decoding="async" />
+  </div>
+  <p class="dl-note" style="margin-top:4px">Обложки на этой полке — настоящие, из приложения. Их рисует сборщик библиотеки, поэтому они не кончаются там, где у магазина закончились превью.</p>
+</section>
+
+<section class="wrap section" id="reader">
+  <div class="section-head">
+    <h2>Как читается</h2>
+    <p>Экраны сняты с этой же сборки, что лежит в APK.</p>
+  </div>
+  <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
+  <div class="showcase">
+    <figure class="shot"><img src="assets/shots/reader.jpg" width="280" height="607" alt="Экран чтения: текст, шрифт и тема" loading="lazy" /><figcaption>Страница чтения: кегль в пунктах, тема «сепия», счётчик полос</figcaption></figure>
+    <figure class="shot"><img src="assets/shots/toc.jpg" width="280" height="607" alt="Оглавление книги списком разделов" loading="lazy" /><figcaption>Оглавление: разделы трактата и глав книги в один список</figcaption></figure>
+    <figure class="shot"><img src="assets/shots/search.jpg" width="280" height="607" alt="Поиск по библиотеке с чипами жанров и подкатегорий" loading="lazy" /><figcaption>Поиск: жанр, подкатегория и текст — по названию и автору</figcaption></figure>
+    <div>
+      <ul class="bullets">
+        <li><span class="tick">✓</span><div><b>Листается свайпом.</b> Горизонтальный жест перелистывает полосу, тап по центру — прячет и показывает панели.</div></li>
+        <li><span class="tick">✓</span><div><b>Настройки под книгой.</b> Открыли «Преступление и наказание» крупным шрифтом — он там и останется, а сказки будут в своём.</div></li>
+        <li><span class="tick">✓</span><div><b>Закладки и цитаты.</b> Отмеченное место открывается из панели, а не ищется по всей книге.</div></li>
+        <li><span class="tick">✓</span><div><b>Прогресс не теряется.</b> При перезапуске — та же страница; при обновлении библиотеки текст перечитывается по контрольной сумме, а место чтения остаётся.</div></li>
+      </ul>
+      <div class="cta-row" style="margin-top:26px">
+        <a class="btn-dl" href="download/WayBooks-1.1.apk" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+          Скачать APK · 19.5 МБ
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section" id="install">
+  <div class="section-head">
+    <h2>Как установить</h2>
+    <p>Приложение не из Google Play: ставится одним файлом за минуту.</p>
+  </div>
+  <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>Скачайте файл</h3><p>Нажмите «Скачать на Android» — файл <code>WayBooks-1.1.apk</code> ляжет в папку «Загрузки».</p></div>
+    <div class="step"><div class="num">2</div><h3>Разрешите установку</h3><p>При первом запуске система спросит разрешение на приложения из «неизвестных источников» — подтвердите для браузера или «Файлов».</p></div>
+    <div class="step"><div class="num">3</div><h3>Откройте и читайте</h3><p>Библиотека загрузится при первом старте: 104 книг, офлайн, без регистрации и аккаунта.</p></div>
+  </div>
+  <div class="warn"><b>Подпись.</b> APK подписан ключом разработчика, а не магазином, поэтому Android покажет предупреждение — это нормальный путь для установки вне Play. Обновления ставятся поверх: версия и подпись те же — данные и прогресс сохраняются.</div>
+</section>
+
+<section class="wrap section" id="faq">
+  <div class="section-head"><h2>Вопросы</h2><p>Коротко о том, что спрашивают чаще всего.</p></div>
+  <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
+  <div class="faq">
+    <details><summary>Нужен ли интернет хотя бы раз?</summary><p>Нужен, чтобы скачать APK. Дальше приложение не делает ни одного запроса: тексты, обложки и настройки лежат внутри. Проверено — во время чтения наружу не уходит ничего.</p></details>
+    <details><summary>Книги правда полные?</summary><p>Да. Встроенная библиотека собирается из текстов, а не из описаний: у каждого произведения есть все главы, а издательский аппарат — примечания, послесловия, колонтитулы, списки литературы — вырезается. Если текст приходит битым (плохая оцифровка, дубль другой книги, список уроков вместо текста), сборщик такую книгу просто не выпускает.</p></details>
+    <details><summary>Мои закладки и прогресс не пропадут при обновлении?</summary><p>Нет. Обновление ставится поверх тем же ключом, база приложения остаётся на месте. Если в новой сборке поменялся текст книги, она перечитывается по контрольной сумме, а место чтения сохраняется там, где позволяет разбивка.</p></details>
+    <details><summary>Можно ли читать свои файлы?</summary><p>Можно: EPUB, FB2, PDF и обычный TXT добавляются прямо в приложении, попадают на полку «Добавленные книги» и читаются так же, как встроенные — с оглавлением, темой и сохранением позиции.</p></details>
+    <details><summary>Сколько места это занимает?</summary><p>APK весит 19.5 МБ, и почти весь объём — тексты и обложки библиотеки. После установки книги лежат в памяти приложения; на телефоне с 2 ГБ свободного места хватает с запасом.</p></details>
+    <details><summary>Есть ли синхронизация между устройствами?</summary><p>Нет, и это осознанно: читалка офлайн, без аккаунтов и облаков. Свои файлы можно перенести вручную, встроенная библиотека есть в каждой копии приложения.</p></details>
+  </div>
+</section>
+
+<section class="wrap section">
+  <div class="final">
+    <h2>Положите библиотеку в карман</h2>
+    <p>Один файл&nbsp;— и в телефоне 104 книг, которые открываются где угодно, даже без сети.</p>
+    <a class="btn-dl" href="download/WayBooks-1.1.apk" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+      Скачать на Android
+    </a>
+    <div class="dl-note" style="text-align:center;margin-top:16px">19.5 МБ · версия 1.1 · Android 5.1+</div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img class="top-logo" src="assets/logo.png" alt="" width="34" height="34" />
+    <div>
+      <div class="wordmark">WayBooks</div>
+      <div class="tagline">вай библиотека</div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      Офлайн-читалка для Android · 104 книг встроено<br />
+      <a href="download/WayBooks-1.1.apk" download style="color:var(--accent-2)">Скачать APK</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
