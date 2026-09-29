@@ -168,19 +168,6 @@ h2{
 .shelf::-webkit-scrollbar-thumb{background:var(--stroke-strong);border-radius:99px}
 .shelf img{width:132px;height:198px;border-radius:12px;flex:none;scroll-snap-align:start;box-shadow:var(--shadow-card)}
 
-/* ——— витрина читалки */
-.showcase{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;align-items:start}
-.shot{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--stroke);background:var(--surface);box-shadow:var(--shadow-float)}
-.shot img{width:100%;display:block}
-.shot figcaption{padding:13px 16px;font-size:13.5px;color:var(--text-dim);border-top:1px solid var(--stroke)}
-.bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
-.bullets li{display:flex;gap:12px;font-size:15px;color:var(--text-dim);line-height:1.55}
-.bullets .tick{
-  flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;margin-top:1px;
-  background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.3);color:#34d399;font-size:12px;
-}
-.bullets b{color:var(--text);font-weight:600}
-
 /* ——— установка */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;counter-reset:s}
 .step{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--stroke)}
@@ -236,7 +223,6 @@ footer .wordmark{font-size:17px}
     <nav class="top-nav">
       <a href="#features">Возможности</a>
       <a href="#library">Библиотека</a>
-      <a href="#reader">Читалка</a>
       <a href="#install">Как установить</a>
       <a href="#faq">Вопросы</a>
     </nav>
@@ -342,33 +328,6 @@ footer .wordmark{font-size:17px}
     <img src="assets/covers/is-dokazatelstva-edinobozhiya.svg" alt="Обложка «Доказательства единобожия»" width="132" height="198" decoding="async" />
   </div>
   <p class="dl-note" style="margin-top:4px">Обложки на этой полке — настоящие, из приложения. Их рисует сборщик библиотеки, поэтому они не кончаются там, где у магазина закончились превью.</p>
-</section>
-
-<section class="wrap section" id="reader">
-  <div class="section-head">
-    <h2>Как читается</h2>
-    <p>Экраны сняты с этой же сборки, что лежит в APK.</p>
-  </div>
-  <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
-  <div class="showcase">
-    <figure class="shot"><img src="assets/shots/reader.jpg" width="280" height="607" alt="Экран чтения: текст, шрифт и тема" loading="lazy" /><figcaption>Страница чтения: кегль в пунктах, тема «сепия», счётчик полос</figcaption></figure>
-    <figure class="shot"><img src="assets/shots/toc.jpg" width="280" height="607" alt="Оглавление книги списком разделов" loading="lazy" /><figcaption>Оглавление: разделы трактата и глав книги в один список</figcaption></figure>
-    <figure class="shot"><img src="assets/shots/search.jpg" width="280" height="607" alt="Поиск по библиотеке с чипами жанров и подкатегорий" loading="lazy" /><figcaption>Поиск: жанр, подкатегория и текст — по названию и автору</figcaption></figure>
-    <div>
-      <ul class="bullets">
-        <li><span class="tick">✓</span><div><b>Листается свайпом.</b> Горизонтальный жест перелистывает полосу, тап по центру — прячет и показывает панели.</div></li>
-        <li><span class="tick">✓</span><div><b>Настройки под книгой.</b> Открыли «Преступление и наказание» крупным шрифтом — он там и останется, а сказки будут в своём.</div></li>
-        <li><span class="tick">✓</span><div><b>Закладки и цитаты.</b> Отмеченное место открывается из панели, а не ищется по всей книге.</div></li>
-        <li><span class="tick">✓</span><div><b>Прогресс не теряется.</b> При перезапуске — та же страница; при обновлении библиотеки текст перечитывается по контрольной сумме, а место чтения остаётся.</div></li>
-      </ul>
-      <div class="cta-row" style="margin-top:26px">
-        <a class="btn-dl" href="download/WayBooks-1.1.apk" download>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
-          Скачать APK · 19.5 МБ
-        </a>
-      </div>
-    </div>
-  </div>
 </section>
 
 <section class="wrap section" id="install">
