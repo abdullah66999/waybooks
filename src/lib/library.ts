@@ -50,7 +50,7 @@ export function ensureLibrary(): Promise<void> {
       const known = new Map((await db.allBooks()).map((b) => [b.id, b]))
       // книги, которые сборщик библиотеки отверг (например, из-за битой оцифровки), убираем из базы
       const shipped = new Set(metas.map((m) => m.id))
-      for (const [id, b] of known) if (!shipped.has(id) && /^(cc|rp|is)-/.test(id)) await db.deleteBook(id)
+      for (const [id] of known) if ((!shipped.has(id) && /^(cc|rp|fl|is)-/.test(id)) || id.startsWith('is-')) await db.deleteBook(id)
       let n = 0
       for (const m of metas) {
         const prev = known.get(m.id)

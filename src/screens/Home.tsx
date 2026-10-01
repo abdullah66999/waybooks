@@ -64,8 +64,8 @@ export default function Home() {
         </div>
       )}
 
-      <Section title={t('Недавно добавленные')} onAll={() => navigate({ name: 'library' })}>
-        <Shelf books={recent} meta={(b) => timeAgo(b.addedAt)} onOpen={(b) => navigate({ name: 'book', bookId: b.id })} />
+      <Section title={t('Рекомендации')} onAll={() => navigate({ name: 'library' })}>
+        <Shelf books={recent} meta={(b) => b.author} onOpen={(b) => navigate({ name: 'book', bookId: b.id })} />
       </Section>
 
       {favorites.length > 0 && (
@@ -73,17 +73,6 @@ export default function Home() {
           <Shelf books={favorites} meta={(b) => b.author} onOpen={(b) => navigate({ name: 'book', bookId: b.id })} />
         </Section>
       )}
-
-      <Section title={t('Жанры')}>
-        <div className="genre-wrap">
-          {genres.map(([g, n]) => (
-            <button key={g} className="chip" onClick={() => navigate({ name: 'search', genre: g })}>
-              {g}
-              <span className="chip-count">{n}</span>
-            </button>
-          ))}
-        </div>
-      </Section>
     </div>
   )
 }

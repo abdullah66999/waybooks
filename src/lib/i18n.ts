@@ -32,6 +32,7 @@ const DICT: Record<string, Pair> = {
   },
   Добавить: { en: 'Add', ce: 'ТӀетоха' },
   'Недавно добавленные': { en: 'Recently added', ce: 'Керара тӀетоьхнарш' },
+  Рекомендации: { en: 'Recommendations', ce: 'Хьехарш' },
   Избранное: { en: 'Favorites', ce: 'Билгалдинарш' },
   Жанры: { en: 'Genres', ce: 'Жанраш' },
   'Смотреть все': { en: 'See all', ce: 'Массо а гайта' },
