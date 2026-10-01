@@ -39,10 +39,10 @@
 .phone-tabs { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; }
 .phone-tab {
   background: rgba(255,255,255,.07); border: 1px solid var(--stroke); color: var(--text-dim);
-  border-radius: 999px; padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;
+  border-radius: 999px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
   transition: all .2s var(--ease);
 }
-.phone-tab:hover { color: var(--text); background: rgba(255,255,255,.12); }
+.phone-tab:hover { color: var(--text); background: rgba(255,255,255,.14); }
 .phone-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px var(--accent-glow); }
 
 /* Новые стили для обновленного логотипа и языкового переключателя */
@@ -309,9 +309,9 @@ footer .wordmark{font-size:17px}
   </div>
   <figure class="phone">
     <div class="phone-tabs">
-      <button class="phone-tab active" data-shot="assets/shots/home.jpg" data-i18n="tab_home">Главная</button>
-      <button class="phone-tab" data-shot="assets/shots/reader.jpg" data-i18n="tab_reader">Читалка</button>
-      <button class="phone-tab" data-shot="assets/shots/home_chechen.jpg" data-i18n="tab_chechen">Нохчийн</button>
+      <button type="button" class="phone-tab active" data-shot="assets/shots/home.jpg" data-i18n="tab_home">Главная</button>
+      <button type="button" class="phone-tab" data-shot="assets/shots/reader.jpg" data-i18n="tab_reader">Читалка</button>
+      <button type="button" class="phone-tab" data-shot="assets/shots/home_chechen.jpg" data-i18n="tab_chechen">Нохчийн</button>
     </div>
     <img id="phoneImg" src="assets/shots/home.jpg" width="306" height="664" alt="Актуальный интерфейс WayBooks" loading="eager" />
   </figure>
@@ -526,7 +526,8 @@ footer .wordmark{font-size:17px}
   const phoneImg = document.getElementById('phoneImg');
   const tabs = document.querySelectorAll('.phone-tab');
   tabs.forEach(t => {
-    t.addEventListener('click', () => {
+    t.addEventListener('click', (e) => {
+      e.preventDefault();
       tabs.forEach(b => b.classList.remove('active'));
       t.classList.add('active');
       if (phoneImg) phoneImg.src = t.dataset.shot;
