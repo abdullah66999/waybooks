@@ -37,7 +37,8 @@ export default function BookDetail() {
   }
 
   return (
-    <div className="screen detail-screen">
+    <>
+      <div className="screen detail-screen">
       <header className="detail-topbar">
         <button className="icon-btn" onClick={() => navigate({ name: 'library' })}>
           <IcBack />
@@ -103,34 +104,35 @@ export default function BookDetail() {
           <IcCheck size={18} /> {t('Прочитано')}
         </button>
       </div>
-
-      {menu && (
-        <Sheet onClose={() => setMenu(false)} title={t('Действия')}>
-          <button className="menu-action" onClick={startEdit}>
-            <IcEdit size={20} /> {t('Изменить метаданные')}
-          </button>
-          <button className="menu-action" onClick={() => { updateBook(book.id, { progress: 0, chapterIndex: 0, scrollPosition: 0, status: 'want' }); setMenu(false); notify(t('Прогресс сброшен')) }}>
-            <IcRefresh size={20} /> {t('Сбросить прогресс')}
-          </button>
-          <button className="menu-action danger" onClick={() => { removeBook(book.id); navigate({ name: 'library' }) }}>
-            <IcTrash size={20} /> {t('Удалить книгу')}
-          </button>
-        </Sheet>
-      )}
-
-      {edit && (
-        <Sheet onClose={() => setEdit(false)} title={t('Метаданные')}>
-          <label className="field"><span>{t('Название')}</span><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></label>
-          <label className="field"><span>{t('Автор')}</span><input value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} /></label>
-          <label className="field"><span>{t('Жанр')}</span><input value={form.genre} onChange={(e) => setForm({ ...form, genre: e.target.value })} /></label>
-          <label className="field"><span>{t('Описание')}</span><textarea rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></label>
-          <button className="btn btn-primary" style={{ width: '100%', marginTop: 8 }} onClick={() => { updateBook(book.id, form); setEdit(false); notify(t('Сохранено')) }}>
-            {t('Сохранить')}
-          </button>
-        </Sheet>
-      )}
-
-      {toast && <Toast text={toast} />}
     </div>
+
+    {menu && (
+      <Sheet onClose={() => setMenu(false)} title={t('Действия')}>
+        <button className="menu-action" onClick={startEdit}>
+          <IcEdit size={20} /> {t('Изменить метаданные')}
+        </button>
+        <button className="menu-action" onClick={() => { updateBook(book.id, { progress: 0, chapterIndex: 0, scrollPosition: 0, status: 'want' }); setMenu(false); notify(t('Прогресс сброшен')) }}>
+          <IcRefresh size={20} /> {t('Сбросить прогресс')}
+        </button>
+        <button className="menu-action danger" onClick={() => { removeBook(book.id); navigate({ name: 'library' }) }}>
+          <IcTrash size={20} /> {t('Удалить книгу')}
+        </button>
+      </Sheet>
+    )}
+
+    {edit && (
+      <Sheet onClose={() => setEdit(false)} title={t('Метаданные')}>
+        <label className="field"><span>{t('Название')}</span><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></label>
+        <label className="field"><span>{t('Автор')}</span><input value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} /></label>
+        <label className="field"><span>{t('Жанр')}</span><input value={form.genre} onChange={(e) => setForm({ ...form, genre: e.target.value })} /></label>
+        <label className="field"><span>{t('Описание')}</span><textarea rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></label>
+        <button className="btn btn-primary" style={{ width: '100%', marginTop: 8 }} onClick={() => { updateBook(book.id, form); setEdit(false); notify(t('Сохранено')) }}>
+          {t('Сохранить')}
+        </button>
+      </Sheet>
+    )}
+
+    {toast && <Toast text={toast} />}
+  </>
   )
 }
