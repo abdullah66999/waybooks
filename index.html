@@ -32,8 +32,9 @@
   --accent:#7c6cff; --accent-2:#b39bff; --accent-glow:rgba(124,108,255,.45);
   --gold:#d9c4a3;
   --radius-sm:12px; --radius:18px; --radius-lg:26px; --radius-xl:34px;
-  --shadow-card:0 10px 30px rgba(0,0,0,.45); --shadow-float:0 18px 50px rgba(0,0,0,.55);
-  --ease:cubic-bezier(.22,1,.36,1);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --ease-smooth:cubic-bezier(.25,1,.5,1);
   --maxw:1120px;
 }
 .hero-badge {
@@ -157,10 +158,21 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#f2e0c3,#b3936a);-webk
 .chip b{color:var(--text);font-weight:600}
 
 /* телефон-витрина */
+@keyframes phone-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
 .phone{
   position:relative;width:min(330px,86vw);margin:0 auto;padding:12px;border-radius:44px;
   background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
   border:1px solid var(--stroke-strong);box-shadow:var(--shadow-float),0 0 90px rgba(124,108,255,.16);
+  animation: phone-float 6s ease-in-out infinite;
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.phone:hover {
+  animation-play-state: paused;
+  transform: translateY(-10px) scale(1.015);
+  box-shadow: var(--shadow-float), 0 0 120px rgba(124,108,255,.32);
 }
 
 .phone img{border-radius:33px;display:block;width:100%}
@@ -181,24 +193,35 @@ h2{
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:16px}
 .card{
   position:relative;padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--stroke);
-  box-shadow:var(--shadow-card);overflow:hidden;transition:transform .3s var(--ease),border-color .3s var(--ease);
+  box-shadow:var(--shadow-card);overflow:hidden;transition:transform .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease);
 }
 .card::before{
   content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(120% 80% at 0% 0%,rgba(255,255,255,.07),transparent 60%);
+  transition: opacity .35s var(--ease);
 }
-.card:hover{transform:translateY(-3px);border-color:var(--stroke-strong)}
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(179,155,255,.35);
+  box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 30px rgba(124,108,255,.14);
+}
 .card .ico{
   width:42px;height:42px;border-radius:13px;display:grid;place-items:center;margin-bottom:15px;
   background:linear-gradient(140deg,rgba(124,108,255,.22),rgba(179,155,255,.08));border:1px solid rgba(179,155,255,.24);color:var(--accent-2);
+  transition: transform .35s var(--ease-spring);
 }
+.card:hover .ico{ transform: scale(1.1) rotate(4deg); }
 .card .ico svg{width:21px;height:21px}
 .card h3{margin:0 0 8px;font-size:17.5px;font-weight:600}
 .card p{margin:0;font-size:14.5px;color:var(--text-dim);line-height:1.6}
 
 /* —--- цифры */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:18px}
-.stat{padding:22px 20px;border-radius:var(--radius);background:var(--card);border:1px solid var(--stroke);text-align:center}
+.stat{
+  padding:22px 20px;border-radius:var(--radius);background:var(--card);border:1px solid var(--stroke);text-align:center;
+  transition: transform .3s var(--ease), border-color .3s var(--ease);
+}
+.stat:hover{ transform: translateY(-3px); border-color: rgba(217,196,163,.3); }
 .stat .n{
   font-family:Georgia,serif;font-size:clamp(26px,3.4vw,34px);font-weight:700;line-height:1;
   background:linear-gradient(180deg,#f2e0c3,#b3936a);-webkit-background-clip:text;background-clip:text;color:transparent;
@@ -206,21 +229,29 @@ h2{
 .stat .l{margin-top:8px;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-faint)}
 
 /* ——— полка обложек */
-/* scrollbar-width/scrollbar-color отключают ::-webkit-scrollbar: с ними Chrome рисует нативную
-   полосу с кнопками-стрелками. Поэтому здесь полоска своя, а стандартные свойства — только
-   для Firefox, где псевдоэлементов webkit нет */
 .shelf{
-  display:flex;gap:14px;overflow-x:auto;padding:6px 0 22px;scroll-snap-type:x mandatory;
+  display:flex;gap:16px;overflow-x:auto;padding:8px 4px 24px;scroll-snap-type:x mandatory;
+  scroll-behavior: smooth;
 }
 .shelf::-webkit-scrollbar{height:8px}
 .shelf::-webkit-scrollbar-track{background:transparent}
 .shelf::-webkit-scrollbar-button{display:none;width:0;height:0}
-.shelf::-webkit-scrollbar-thumb{background:rgba(217,196,163,.3);border-radius:99px}
-.shelf:hover::-webkit-scrollbar-thumb{background:rgba(217,196,163,.5)}
+.shelf::-webkit-scrollbar-thumb{background:rgba(217,196,163,.3);border-radius:99px;transition:background .2s}
+.shelf:hover::-webkit-scrollbar-thumb{background:rgba(217,196,163,.55)}
 @supports not selector(::-webkit-scrollbar){
   .shelf{scrollbar-width:thin;scrollbar-color:rgba(217,196,163,.28) transparent}
 }
-.shelf img{width:132px;height:198px;border-radius:12px;flex:none;scroll-snap-align:start;box-shadow:var(--shadow-card)}
+.shelf img{
+  width:132px;height:198px;border-radius:12px;flex:none;scroll-snap-align:start;box-shadow:var(--shadow-card);
+  transition: transform .38s var(--ease), box-shadow .38s var(--ease);
+}
+.shelf img:hover{
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 18px 40px rgba(0,0,0,.65), 0 0 25px rgba(124,108,255,.24);
+}
+.shelf img:active{
+  transform: scale(0.96);
+}
 
 /* ——— установка */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;counter-reset:s}
