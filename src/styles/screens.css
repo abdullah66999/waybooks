@@ -817,6 +817,9 @@
 .sel-bar {
   position: fixed;
   z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   transform: translate(-50%, calc(-100% - 12px));
   animation: sel-in 0.16s var(--ease);
 }

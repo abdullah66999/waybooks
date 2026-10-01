@@ -6,12 +6,19 @@ import { resolveAsset } from '../lib/resolveAsset'
 import { t } from '../lib/i18n'
 
 export function BookCover({ book, width, height, radius = 14 }: { book: Book; width: number; height: number; radius?: number }) {
+  const [failed, setFailed] = useState(false)
   const style: React.CSSProperties = { width, height, borderRadius: radius }
   const coverSrc = resolveAsset(book.cover)
-  if (coverSrc) {
+  if (coverSrc && !failed) {
     return (
       <div className="cover" style={style}>
-        <img src={coverSrc} alt={book.title} />
+        <img
+          src={coverSrc}
+          alt={book.title}
+          loading="lazy"
+          decoding="async"
+          onError={() => setFailed(true)}
+        />
       </div>
     )
   }

@@ -6,7 +6,7 @@ import type { Book, Note, ReaderSettings } from '../types'
 import { themeOf } from '../lib/themes'
 import { Sheet, Toast } from '../components/common'
 import ReaderSettingsSheet from '../components/ReaderSettingsSheet'
-import { IcBack, IcBookmark, IcClock, IcComment, IcEdit, IcSearch, IcToc } from '../components/icons'
+import { IcBack, IcBookmark, IcClock, IcComment, IcCopy, IcEdit, IcSearch, IcToc } from '../components/icons'
 import { loadBookChapters } from '../lib/library'
 
 type SheetKind = null | 'settings' | 'toc' | 'bookmarks' | 'notes' | 'search'
@@ -27,7 +27,7 @@ const CROSS_IN_MS = 260
 const FADE_MS = 150
 const CROSS_LEAD = 0.55
 const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
-const HOLD_MS = 320
+const HOLD_MS = 260
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 // до того как первая глава отмерена, считаем полосу примерно в 520 знаков — иначе на долю
 // секунды внизу мелькнёт итог, посчитанный по совсем другой оценке
@@ -66,10 +66,74 @@ function caretAt(x: number, y: number): Caret | null {
     caretRangeFromPoint?: (x: number, y: number) => Range | null
     caretPositionFromPoint?: (x: number, y: number) => { offsetNode: Node; offset: number } | null
   }
-  const r = d.caretRangeFromPoint?.(x, y)
-  if (r) return { node: r.startContainer as Text, offset: r.startOffset }
-  const p = d.caretPositionFromPoint?.(x, y)
-  return p ? { node: p.offsetNode as Text, offset: p.offset } : null
+  let targetNode: Node | null = null
+  let targetOffset = 0
+
+  if (typeof d.caretRangeFromPoint === 'function') {
+    const r = d.caretRangeFromPoint(x, y)
+    if (r) {
+      targetNode = r.startContainer
+      targetOffset = r.startOffset
+    }
+  } else if (typeof d.caretPositionFromPoint === 'function') {
+    const p = d.caretPositionFromPoint(x, y)
+    if (p) {
+      targetNode = p.offsetNode
+      targetOffset = p.offset
+    }
+  }
+
+  // Fallback to elementFromPoint if caret was null (e.g. on padding / margins)
+  if (!targetNode && typeof document.elementFromPoint === 'function') {
+    const el = document.elementFromPoint(x, y)
+    if (el) {
+      targetNode = el
+      targetOffset = 0
+    }
+  }
+
+  if (!targetNode) return null
+
+  // If container is an Element (common in WebKit / Safari iOS), drill down to actual Text node
+  if (targetNode.nodeType === Node.ELEMENT_NODE) {
+    const el = targetNode as Element
+    const children = Array.from(el.childNodes)
+    if (children.length > 0) {
+      const idx = Math.min(Math.max(0, targetOffset), children.length - 1)
+      const candidate = children[idx]
+      if (candidate && candidate.nodeType === Node.TEXT_NODE) {
+        targetNode = candidate
+        targetOffset = (candidate as Text).data.length
+      } else {
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
+        let textNode = walker.nextNode()
+        let found: Node | null = null
+        while (textNode) {
+          found = textNode
+          try {
+            const range = document.createRange()
+            range.selectNodeContents(textNode)
+            const rect = range.getBoundingClientRect()
+            if (y >= rect.top - 4 && y <= rect.bottom + 4) {
+              found = textNode
+              break
+            }
+          } catch {}
+          textNode = walker.nextNode()
+        }
+        if (found) {
+          targetNode = found
+          targetOffset = 0
+        }
+      }
+    }
+  }
+
+  if (targetNode && targetNode.nodeType === Node.TEXT_NODE) {
+    const textData = (targetNode as Text).data || ''
+    return { node: targetNode as Text, offset: Math.min(targetOffset, textData.length) }
+  }
+  return null
 }
 
 const isWordChar = (c: string) => /[\p{L}\p{N}]/u.test(c)
@@ -567,6 +631,37 @@ export default function Reader() {
     clearSel()
   }
 
+  function copySel() {
+    if (!sel?.text) return
+    const txt = sel.text
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(() => {
+        notify(t('Скопировано в буфер'))
+      }).catch(() => {
+        fallbackCopy(txt)
+      })
+    } else {
+      fallbackCopy(txt)
+    }
+    clearSel()
+  }
+
+  function fallbackCopy(txt: string) {
+    try {
+      const ta = document.createElement('textarea')
+      ta.value = txt
+      ta.style.position = 'fixed'
+      ta.style.opacity = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+      notify(t('Скопировано в буфер'))
+    } catch {
+      notify(t('Не удалось скопировать'))
+    }
+  }
+
   function saveComment() {
     if (!editingCommentNote || !book) return
     const text = commentText.trim()
@@ -733,8 +828,7 @@ export default function Reader() {
         onPointerMove={onMove}
         onPointerUp={onUp}
         onPointerCancel={onUp}
-        // нативное выделение мышью отбито: иначе браузер на первом же ходе забирает жест
-        // (pointercancel) и наша протяжка перестаёт расширять цитату
+        onContextMenu={(e) => e.preventDefault()}
         onMouseDown={(e) => e.preventDefault()}
         onWheel={onWheel}
         onClick={() => setUi((v) => !v)}
@@ -1042,10 +1136,13 @@ export default function Reader() {
           className="sel-bar"
           data-text={sel.text}
           style={{
-            left: Math.round(Math.min(Math.max(sel.x, 96), window.innerWidth - 96)),
-            top: Math.round(Math.max(sel.y, 76)),
+            left: Math.round(Math.min(Math.max(sel.x, 110), window.innerWidth - 110)),
+            top: Math.round(sel.y < 90 ? (sel.rects[0]?.y ?? sel.y) + (sel.rects[0]?.h ?? 20) + 12 : sel.y - 48),
           }}
         >
+          <button className="sel-save" onClick={copySel}>
+            <IcCopy size={15} /> {t('Копировать')}
+          </button>
           <button className="sel-save" onClick={noteFromSel}>
             <IcEdit size={15} /> {t('В заметки')}
           </button>
