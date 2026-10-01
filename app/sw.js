@@ -1,5 +1,5 @@
 // Service Worker for WayBooks PWA — full offline reading
-const CACHE_NAME = 'waybooks-v2.2-clean';
+const CACHE_NAME = 'waybooks-v2.3-clean';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
