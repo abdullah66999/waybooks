@@ -36,14 +36,28 @@
   --ease:cubic-bezier(.22,1,.36,1);
   --maxw:1120px;
 }
-.phone-tabs { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
+  border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: .01em;
+  border: 1px solid rgba(217,196,163,.30); background: rgba(217,196,163,.07); color: var(--gold);
+  margin-bottom: 22px; width: fit-content;
+}
+.badge-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #2ecc71;
+  box-shadow: 0 0 10px rgba(46, 204, 113, 0.7); display: inline-block;
+}
+.phone-container { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.phone-tabs {
+  display: inline-flex; gap: 4px; padding: 4px; background: rgba(255,255,255,.06);
+  border: 1px solid var(--stroke); border-radius: 999px; backdrop-filter: blur(8px);
+}
 .phone-tab {
-  background: rgba(255,255,255,.07); border: 1px solid var(--stroke); color: var(--text-dim);
-  border-radius: 999px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
+  background: transparent; border: none; color: var(--text-dim);
+  border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer;
   transition: all .2s var(--ease);
 }
-.phone-tab:hover { color: var(--text); background: rgba(255,255,255,.14); }
-.phone-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px var(--accent-glow); }
+.phone-tab:hover { color: var(--text); background: rgba(255,255,255,.08); }
+.phone-tab.active { background: var(--accent); color: #fff; box-shadow: 0 2px 10px var(--accent-glow); }
 
 /* Новые стили для обновленного логотипа и языкового переключателя */
 .top-logo { border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
@@ -287,8 +301,7 @@ footer .wordmark{font-size:17px}
 <main>
 <section class="wrap hero">
   <div>
-    <span class="eyebrow">◆ Офлайн-читалка для Android</span>
-    <div class="version-badge" data-i18n="ver_badge">Актуальная версия 1.4 · С чеченским языком</div>
+    <div class="hero-badge"><span class="badge-dot"></span><span data-i18n="hero_badge_text">Версия 1.4 · Офлайн-читалка на русском и чеченском</span></div>
     <h1 data-i18n="hero_h1">Книги&nbsp;— с&nbsp;собой.<br /><em>Интернет не&nbsp;нужен.</em></h1>
     <p class="lede" data-i18n="hero_lede">WayBooks — читалка без магазина, без подписки и без облака: 104 полных текстов уже лежат внутри приложения, интерфейс на русском и чеченском языках, а свои книги можно докинуть файлами. Всё работает в самолёте, в метро и в горах.</p>
     <div class="cta-row">
@@ -307,14 +320,16 @@ footer .wordmark{font-size:17px}
       <span class="chip chip-gold" data-i18n="chip_chechen">Нохчийн мотт · Чеченский интерфейс</span>
     </div>
   </div>
-  <figure class="phone">
+  <div class="phone-container">
     <div class="phone-tabs">
       <button type="button" class="phone-tab active" data-shot="assets/shots/home.jpg" data-i18n="tab_home">Главная</button>
       <button type="button" class="phone-tab" data-shot="assets/shots/reader.jpg" data-i18n="tab_reader">Читалка</button>
       <button type="button" class="phone-tab" data-shot="assets/shots/home_chechen.jpg" data-i18n="tab_chechen">Нохчийн</button>
     </div>
-    <img id="phoneImg" src="assets/shots/home.jpg" width="306" height="664" alt="Актуальный интерфейс WayBooks" loading="eager" />
-  </figure>
+    <figure class="phone">
+      <img id="phoneImg" src="assets/shots/home.jpg" width="306" height="664" alt="Актуальный интерфейс WayBooks" loading="eager" />
+    </figure>
+  </div>
 </section>
 
 <section class="wrap section" id="features">
@@ -510,19 +525,12 @@ footer .wordmark{font-size:17px}
     document.getElementById('langRu')?.classList.toggle('active', lang === 'ru');
     document.getElementById('langCe')?.classList.toggle('active', lang === 'ce');
     document.documentElement.lang = lang === 'ce' ? 'ce' : 'ru';
-    if (lang === 'ce') {
-      const ceTab = document.querySelector('[data-shot="assets/shots/home_chechen.jpg"]');
-      if (ceTab) ceTab.click();
-    } else {
-      const ruTab = document.querySelector('[data-shot="assets/shots/home.jpg"]');
-      if (ruTab) ruTab.click();
-    }
     localStorage.setItem('waybooks_lang', lang);
   }
 
   document.getElementById('langRu')?.addEventListener('click', () => setLang('ru'));
   
-  // Phone screenshots switcher
+  // Phone tabs switcher
   const phoneImg = document.getElementById('phoneImg');
   const tabs = document.querySelectorAll('.phone-tab');
   tabs.forEach(t => {
