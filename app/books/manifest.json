@@ -1,0 +1,32 @@
+[
+  {
+    "id": "fmt-gogol-vechera",
+    "file": "/books/vechera-na-hutore.epub",
+    "name": "vechera-na-hutore.epub",
+    "format": "epub",
+    "title": "Вечера на хуторе близ Диканьки",
+    "author": "Николай Гоголь",
+    "genre": "Русская литература",
+    "subgenre": "Повесть",
+    "description": "Вечер накануне Рождества и под Крещение, ночь перед Пасхой и страшной ночью у затопленного колодца: восемь повестей хутора близ Диканьки, где чёрт ходит по улице, кузнец достаёт месяц с неба, а панок влюбляется в ведьму.",
+    "chapters": 41,
+    "bytes": 288877,
+    "rev": "5e1ca1cd02",
+    "cover": "/covers/fmt-gogol-vechera.jpg"
+  },
+  {
+    "id": "fmt-dostoevskiy-dvoynik",
+    "file": "/books/dvoynik.fb2",
+    "name": "dvoynik.fb2",
+    "format": "fb2",
+    "title": "Двойник",
+    "author": "Фёдор Достоевский",
+    "genre": "Русская литература",
+    "subgenre": "Повесть",
+    "description": "Петербургская повесть: титулярный советник Голядкин встречает своего точного двойника — и постепенно уступает ему имя, службу и место за столом.",
+    "chapters": 13,
+    "bytes": 640270,
+    "rev": "1782b59b21",
+    "cover": "/covers/fmt-dostoevskiy-dvoynik.jpg"
+  }
+]

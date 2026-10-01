@@ -1,0 +1,19 @@
+{
+  "name": "WayBooks — Библиотека",
+  "short_name": "WayBooks",
+  "description": "Офлайн-читалка: вайнахская, исламская и русская классика без интернета",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0b0f",
+  "theme_color": "#0b0b0f",
+  "icons": [
+    {
+      "src": "./app-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
