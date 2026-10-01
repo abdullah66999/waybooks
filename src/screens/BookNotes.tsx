@@ -58,7 +58,8 @@ export default function BookNotes() {
   }
 
   return (
-    <div className="screen">
+    <>
+      <div className="screen">
       <header className="detail-topbar">
         <button className="icon-btn" onClick={() => navigate({ name: 'notes' })}>
           <IcBack />
@@ -111,34 +112,35 @@ export default function BookNotes() {
           ))}
         </div>
       )}
-
-      {editingNote && (
-        <Sheet onClose={() => setEditingNote(null)} title={t('Комментарий к заметке')}>
-          <div className="note-comment-quote-preview">
-            “{editingNote.text}”
-          </div>
-          <textarea
-            className="note-input"
-            rows={4}
-            value={commentDraft}
-            placeholder={t('Напишите свои мысли или комментарий…')}
-            onChange={(e) => setCommentDraft(e.target.value)}
-            autoFocus
-          />
-          <div className="note-sheet-actions">
-            <button className="btn btn-primary" style={{ flex: 1 }} onClick={saveComment}>
-              {t('Сохранить')}
-            </button>
-            {editingNote.comment && (
-              <button className="btn btn-danger-outline" onClick={deleteComment}>
-                {t('Удалить комментарий')}
-              </button>
-            )}
-          </div>
-        </Sheet>
-      )}
-
-      {toast && <Toast text={toast} />}
     </div>
+
+    {editingNote && (
+      <Sheet onClose={() => setEditingNote(null)} title={t('Комментарий к заметке')}>
+        <div className="note-comment-quote-preview">
+          “{editingNote.text}”
+        </div>
+        <textarea
+          className="note-input"
+          rows={4}
+          value={commentDraft}
+          placeholder={t('Напишите свои мысли или комментарий…')}
+          onChange={(e) => setCommentDraft(e.target.value)}
+          autoFocus
+        />
+        <div className="note-sheet-actions">
+          <button className="btn btn-primary" style={{ flex: 1 }} onClick={saveComment}>
+            {t('Сохранить')}
+          </button>
+          {editingNote.comment && (
+            <button className="btn btn-danger-outline" onClick={deleteComment}>
+              {t('Удалить комментарий')}
+            </button>
+          )}
+        </div>
+      </Sheet>
+    )}
+
+    {toast && <Toast text={toast} />}
+  </>
   )
 }

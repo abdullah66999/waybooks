@@ -1147,16 +1147,16 @@
 /* ---------- Заметки ---------- */
 .note-input {
   width: 100%;
-  min-height: 96px;
+  min-height: 80px;
   resize: none;
-  padding: 14px 16px;
+  padding: 12px 14px;
   border-radius: var(--radius-sm);
   background: var(--card);
   border: 1px solid var(--stroke);
   color: var(--text);
   font-family: inherit;
-  font-size: 15.5px;
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.5;
 }
 .note-input:focus { outline: none; border-color: var(--stroke-strong); }
 .note-input::placeholder { color: var(--text-faint); }
@@ -1217,17 +1217,17 @@
 .note-comment-quote-preview {
   font-style: italic;
   font-size: 13.5px;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--text-dim);
-  padding: 10px 14px;
+  padding: 8px 12px;
   background: rgba(255, 255, 255, 0.04);
   border-radius: var(--radius-sm);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   border-left: 3px solid var(--accent);
-  max-height: 110px;
+  max-height: 80px;
   overflow-y: auto;
 }
-.note-sheet-actions { display: flex; gap: 10px; margin-top: 14px; }
+.note-sheet-actions { display: flex; gap: 10px; margin-top: 12px; margin-bottom: 6px; }
 .btn-danger-outline {
   background: transparent;
   border: 1px solid rgba(239, 68, 68, 0.45);
