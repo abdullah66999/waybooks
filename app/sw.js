@@ -1,5 +1,5 @@
 // Service Worker for WayBooks PWA — full offline reading
-const CACHE_NAME = 'waybooks-v2.6-clean';
+const CACHE_NAME = 'waybooks-v3.0-clean';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -25,13 +25,14 @@ self.addEventListener('fetch', (event) => {
   // Only handle HTTP/HTTPS requests
   if (!url.protocol.startsWith('http')) return;
 
-  // Network-first for html and library index/manifest to always fetch the latest books catalog
-  const isCatalogOrHtml = url.pathname.endsWith('index.html') || 
-                          url.pathname.endsWith('/') || 
-                          url.pathname.includes('/library/index.json') ||
-                          url.pathname.includes('/books/manifest.json');
+  // Network-first for catalog, all book contents, covers, and html to always fetch the latest content
+  const isNetworkFirst = url.pathname.includes('/library/') ||
+                         url.pathname.includes('/covers/') ||
+                         url.pathname.endsWith('index.html') || 
+                         url.pathname.endsWith('/') || 
+                         url.pathname.includes('/books/manifest.json');
 
-  if (isCatalogOrHtml) {
+  if (isNetworkFirst) {
     event.respondWith(
       fetch(req)
         .then((response) => {
