@@ -10,6 +10,7 @@ import AddBook from './screens/AddBook'
 import BookDetail from './screens/BookDetail'
 import Reader from './screens/Reader'
 import { t } from './lib/i18n'
+import { resolveAsset } from './lib/resolveAsset'
 
 function Shell() {
   const { ready, route } = useStore()
@@ -17,7 +18,7 @@ function Shell() {
     return (
       <div className="app-frame" style={{ display: 'grid', placeItems: 'center' }}>
         <div style={{ textAlign: 'center' }}>
-          <img src="/logo.png" alt="WayBooks" className="splash-logo" style={{ objectFit: "contain" }} />
+          <img src={resolveAsset('logo.png')} alt="WayBooks" className="splash-logo" style={{ objectFit: "contain" }} />
           <div className="muted" style={{ marginTop: 14, fontSize: 14 }}>{t('Загружаем библиотеку…')}</div>
         </div>
       </div>

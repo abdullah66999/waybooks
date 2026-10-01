@@ -29,6 +29,7 @@ async function tx<T>(store: string, mode: IDBTransactionMode, fn: (s: IDBObjectS
 
 export const db = {
   allBooks: () => tx<Book[]>('books', 'readonly', (s) => s.getAll()),
+  getBook: (id: string) => tx<Book | undefined>('books', 'readonly', (s) => s.get(id)),
   putBook: (book: Book) => tx('books', 'readwrite', (s) => s.put(book)),
   deleteBook: (id: string) => tx('books', 'readwrite', (s) => s.delete(id)),
   clearBooks: () => tx('books', 'readwrite', (s) => s.clear()),

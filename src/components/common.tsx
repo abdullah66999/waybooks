@@ -2,14 +2,16 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import type { Book } from '../types'
 import { gradientCover } from '../lib/cover'
+import { resolveAsset } from '../lib/resolveAsset'
 import { t } from '../lib/i18n'
 
 export function BookCover({ book, width, height, radius = 14 }: { book: Book; width: number; height: number; radius?: number }) {
   const style: React.CSSProperties = { width, height, borderRadius: radius }
-  if (book.cover) {
+  const coverSrc = resolveAsset(book.cover)
+  if (coverSrc) {
     return (
       <div className="cover" style={style}>
-        <img src={book.cover} alt={book.title} />
+        <img src={coverSrc} alt={book.title} />
       </div>
     )
   }

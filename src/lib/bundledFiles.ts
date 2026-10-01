@@ -2,6 +2,7 @@ import type { Book } from '../types'
 import { db } from './db'
 import { bookFromParsed } from './importBook'
 import { parseFile } from './parsers'
+import { resolveAsset } from './resolveAsset'
 
 interface BundledItem {
   id: string
@@ -23,14 +24,14 @@ interface BundledItem {
 // перестают быть «кодом на будущее» и проверяются при каждом установлении приложения
 export async function ensureBundledFiles(): Promise<void> {
   try {
-    const r = await fetch('/books/manifest.json')
+    const r = await fetch(resolveAsset('/books/manifest.json'))
     if (!r.ok) return
     const items: BundledItem[] = await r.json()
     const known = new Map((await db.allBooks()).map((b) => [b.id, b]))
     for (const m of items) {
       const prev = known.get(m.id)
       if (prev && (await db.getSetting<string>('rev:' + m.id)) === m.rev) continue
-      const fr = await fetch(m.file)
+      const fr = await fetch(resolveAsset(m.file))
       if (!fr.ok) continue
       const blob = await fr.blob()
       const file = new File([blob], m.name, { type: m.format === 'epub' ? 'application/epub+zip' : 'text/xml' })
@@ -39,7 +40,7 @@ export async function ensureBundledFiles(): Promise<void> {
       const book: Book = {
         // название и автора берём из самого файла: именно их парсер и должен уметь читать
         ...bookFromParsed(parsed, { id: m.id, addedAt: prev?.addedAt ?? Date.now() }),
-        cover: (m as any).cover || `/covers/${m.id}.jpg` || parsed.cover,
+        cover: resolveAsset((m as any).cover || `/covers/${m.id}.jpg` || parsed.cover),
         fileSize: blob.size,
         genre: m.genre,
         subgenre: m.subgenre,

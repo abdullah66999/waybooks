@@ -61,8 +61,8 @@ export default function BookDetail() {
 
       <div className="detail-meta">
         <span className="badge">{FORMAT_LABEL[book.format]}</span>
-        <span className="badge">{formatSize(book.fileSize)}</span>
-        <span className="badge">{chapterWord(book.chapters.length)}</span>
+        {book.fileSize > 0 && <span className="badge">{formatSize(book.fileSize)}</span>}
+        <span className="badge">{book.chapters?.length ? chapterWord(book.chapters.length) : (book.pages ? t('{n} стр.', { n: book.pages }) : '')}</span>
         {book.genre && <span className="badge">{book.genre}</span>}
         {book.subgenre && <span className="badge badge-sub">{book.subgenre}</span>}
       </div>

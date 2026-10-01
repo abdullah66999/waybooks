@@ -5,6 +5,7 @@ import { BookCover, ProgressBar } from '../components/common'
 import Shelf from '../components/Shelf'
 import { IcChevron, IcPlay, IcPlus } from '../components/icons'
 import { t } from '../lib/i18n'
+import { resolveAsset } from '../lib/resolveAsset'
 
 export default function Home() {
   const { books, navigate } = useStore()
@@ -31,7 +32,7 @@ export default function Home() {
     <div className="screen">
       <header className="home-head">
         <div className="brand">
-          <img src="/logo.png" alt="WayBooks" className="brand-logo" />
+          <img src={resolveAsset('logo.png')} alt="WayBooks" className="brand-logo" />
           <div>
             <div className="brand-name">WayBooks</div>
             <div className="brand-tag">{t('Вай Библиотека')}</div>
@@ -93,7 +94,7 @@ function ContinueCard({ book, label, onOpen }: { book: Book; label: string; onOp
   return (
     <div className="continue-card" onClick={onOpen}>
       <div className="continue-bg" style={{ ['--hue' as string]: String(book.coverHue) }}>
-        {book.cover && <img src={book.cover} alt="" className="continue-bg-img" />}
+        {book.cover && <img src={resolveAsset(book.cover)} alt="" className="continue-bg-img" />}
       </div>
       <div className="continue-inner">
         <BookCover book={book} width={86} height={124} />

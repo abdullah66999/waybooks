@@ -7,6 +7,7 @@ import { themeOf } from '../lib/themes'
 import { LANGS, t } from '../lib/i18n'
 import { bookWord } from '../lib/i18n'
 import { FONT_OPTIONS, type Lang, type ReaderSettings } from '../types'
+import { resolveAsset } from '../lib/resolveAsset'
 
 export default function Settings() {
   const { settings, setSettings, books, navigate } = useStore()
@@ -36,7 +37,7 @@ export default function Settings() {
 
       <div className="settings-group card">
         <div className="about-block">
-          <img src="/logo.png" alt="" className="about-logo" />
+          <img src={resolveAsset('logo.png')} alt="" className="about-logo" />
           <div>
             <b>WayBooks</b>
             <div className="muted" style={{ fontSize: 13 }}>{t('Версия')} 1.4</div>

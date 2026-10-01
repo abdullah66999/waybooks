@@ -7,6 +7,7 @@ import { themeOf } from '../lib/themes'
 import { Sheet, Toast } from '../components/common'
 import ReaderSettingsSheet from '../components/ReaderSettingsSheet'
 import { IcBack, IcBookmark, IcClock, IcComment, IcEdit, IcSearch, IcToc } from '../components/icons'
+import { loadBookChapters } from '../lib/library'
 
 type SheetKind = null | 'settings' | 'toc' | 'bookmarks' | 'notes' | 'search'
 
@@ -488,6 +489,36 @@ export default function Reader() {
     return () => window.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageCount, chapter])
+
+  useEffect(() => {
+    if (book && (!book.chapters || book.chapters.length === 0)) {
+      loadBookChapters(book.id).then((loaded) => {
+        if (loaded && loaded.chapters?.length) {
+          updateBook(loaded.id, loaded)
+        }
+      })
+    }
+  }, [book?.id, book?.chapters?.length, updateBook])
+
+  if (book && (!book.chapters || book.chapters.length === 0)) {
+    const theme = themeOf(settings.theme)
+    return (
+      <div className="reader-root" style={{ background: theme.bg, color: theme.text }}>
+        <header className="reader-top" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px' }}>
+          <button className="icon-btn" onClick={() => navigate({ name: 'home' })} aria-label={t('Назад')}>
+            <IcBack size={22} />
+          </button>
+        </header>
+        <div style={{ display: 'grid', placeItems: 'center', height: '60vh', textAlign: 'center', padding: 24 }}>
+          <div>
+            <div className="spinner" style={{ margin: '0 auto 16px', width: 36, height: 36, border: '3px solid var(--stroke)', borderTopColor: 'var(--accent)', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+            <div style={{ fontSize: 16, fontWeight: 600, color: theme.text }}>{book.title}</div>
+            <div className="muted" style={{ fontSize: 13, marginTop: 6 }}>{t('Загружаем текст книги…')}</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (!book || !ch) {
     return (
