@@ -140,18 +140,10 @@ h1 em{font-style:normal;background:linear-gradient(180deg,var(--gold-2),#b3936a)
   border:1px solid var(--stroke-strong);box-shadow:var(--shadow-float),0 0 100px rgba(124,108,255,.2);
 }
 .phone img{border-radius:27px;display:block;width:100%}
-.float-tag{
-  position:absolute;left:2%;bottom:-5%;z-index:2;display:flex;align-items:center;gap:9px;
-  padding:10px 15px;border-radius:16px;font-size:12.5px;font-weight:600;color:var(--text);
-  background:rgba(19,19,25,.86);border:1px solid var(--stroke-strong);backdrop-filter:blur(12px);
-  box-shadow:var(--shadow-card);
-}
-.float-tag svg{width:15px;height:15px;color:var(--gold);flex:none}
 @media (max-width:960px){
   .hero{grid-template-columns:1fr;gap:44px;padding-block:42px 40px}
   /* веер обложек за телефоном на узком экране вылезал бы за границу вьюпорта */
   .fan{display:none}
-  .float-tag{left:50%;bottom:-16px;transform:translateX(-50%)}
 }
 
 /* ——— заголовки секций */
@@ -354,7 +346,6 @@ footer .wordmark{font-size:17px}
     <figure class="phone" style="margin:0">
       <img src="assets/shots/home.jpg" width="310" height="551" alt="Главный экран WayBooks: период чтения, «продолжить чтение» и книжная полка" loading="eager" />
     </figure>
-    <div class="float-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 9.5a14 14 0 0117 0"/><path d="M6.5 13a9.5 9.5 0 0111 0"/><path d="M9.5 16.5a5 5 0 015 0"/><path d="M12 20h.01"/><path d="M4 4l16 16"/></svg>ни одного запроса во время чтения</div>
   </div>
 </section>
 
