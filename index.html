@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>WayBooks — офлайн-читалка на Android</title>
-<meta name="description" content="WayBooks — читалка, которая работает без интернета: 102 полных текстов встроено, свои обложки, EPUB, FB2, PDF и TXT, четыре темы и счётчик страниц. Скачать APK на Android." />
+<meta name="description" content="WayBooks — читалка, которая работает без интернета: 103 полных текстов встроено, свои обложки, EPUB, FB2, PDF и TXT, четыре темы и счётчик страниц. Скачивается бесплатно из RuStore." />
 <meta name="theme-color" content="#0b0b0f" />
 <link rel="icon" type="image/png" href="assets/logo.png" />
 <link rel="preload" as="image" href="assets/shots/home.jpg" />
@@ -89,14 +89,17 @@ h1{
 h1 em{font-style:normal;background:linear-gradient(180deg,#f2e0c3,#b3936a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{font-size:clamp(15.5px,1.6vw,18px);color:var(--text-dim);margin:18px 0 0;max-width:52ch}
 .cta-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px}
-.btn-dl{
-  display:inline-flex;align-items:center;gap:11px;padding:16px 28px;border-radius:999px;
-  font-size:17px;font-weight:700;color:#fff;
+.btn-store{
+  display:inline-flex;align-items:center;gap:13px;padding:12px 26px 12px 13px;border-radius:999px;color:#fff;
   background:linear-gradient(135deg,var(--accent) 0%,#9b8bff 55%,var(--accent-2) 100%);
   box-shadow:0 16px 40px var(--accent-glow);transition:transform .28s var(--ease),box-shadow .28s var(--ease);
 }
-.btn-dl:hover{transform:translateY(-2px);box-shadow:0 24px 54px var(--accent-glow)}
-.btn-dl svg{width:20px;height:20px}
+.btn-store:hover{transform:translateY(-2px);box-shadow:0 24px 54px var(--accent-glow)}
+.btn-store .bag{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:50%;background:rgba(0,0,0,.2)}
+.btn-store .bag svg{width:19px;height:19px}
+.btn-store .txt{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+.btn-store .txt small{font-size:10.5px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;opacity:.82}
+.btn-store .txt b{font-size:18px;letter-spacing:.2px}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:9px;padding:15px 22px;border-radius:999px;
   background:var(--card);border:1px solid var(--stroke);font-size:15.5px;font-weight:600;color:var(--text);
@@ -187,6 +190,7 @@ h2{
 .step h3{margin:0 0 7px;font-size:16.5px;font-weight:600}
 .step p{margin:0;font-size:14.5px;color:var(--text-dim)}
 .step code{background:var(--surface-2);border:1px solid var(--stroke);border-radius:7px;padding:1px 7px;font-size:13px}
+.step a{color:var(--accent-2);text-decoration:underline;text-underline-offset:3px}
 .warn{
   margin-top:18px;padding:16px 18px;border-radius:var(--radius);font-size:14.5px;color:var(--text-dim);
   background:rgba(217,196,163,.06);border:1px solid rgba(217,196,163,.2);
@@ -216,7 +220,7 @@ details p{margin:0;padding:0 20px 18px;font-size:14.5px;color:var(--text-dim);li
 footer{padding:40px 0 46px;color:var(--text-faint);font-size:13.5px}
 footer .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 footer .wordmark{font-size:17px}
-@media (max-width:600px){.section{padding-block:46px}.section-head{flex-direction:column;align-items:flex-start;gap:12px}.cta-row{flex-direction:column;align-items:stretch}.btn-dl,.btn-ghost{justify-content:center}}
+@media (max-width:600px){.section{padding-block:46px}.section-head{flex-direction:column;align-items:flex-start;gap:12px}.cta-row{flex-direction:column;align-items:stretch}.btn-store,.btn-ghost{justify-content:center}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -235,7 +239,7 @@ footer .wordmark{font-size:17px}
       <a href="#install">Как установить</a>
       <a href="#faq">Вопросы</a>
     </nav>
-    <a class="top-cta" href="download/WayBooks-1.5.6.apk" download>Скачать</a>
+    <a class="top-cta" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener">Скачать в RuStore</a>
   </div>
 </header>
 
@@ -244,24 +248,24 @@ footer .wordmark{font-size:17px}
   <div>
     <span class="eyebrow">◆ Офлайн-читалка для Android</span>
     <h1>Книги&nbsp;— с&nbsp;собой.<br /><em>Интернет не&nbsp;нужен.</em></h1>
-    <p class="lede">WayBooks — читалка без магазина, без подписки и без облака: 102 полных текстов уже лежат внутри приложения, а свои книги можно докинуть файлами. Всё работает в самолёте, в метро и в горах.</p>
+    <p class="lede">WayBooks — читалка без подписки, без облака и без рекламы: 103 полных текста уже лежат внутри приложения, а свои книги можно докинуть файлами. Всё работает в самолёте, в метро и в горах.</p>
     <div class="cta-row">
-      <a class="btn-dl" href="download/WayBooks-1.5.6.apk" download>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
-        Скачать на Android
+      <a class="btn-store" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener">
+        <span class="bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8h13l-1.2 11.5a1.6 1.6 0 01-1.6 1.5H8.3a1.6 1.6 0 01-1.6-1.5z"/><path d="M9 8a3 3 0 016 0"/></svg></span>
+        <span class="txt"><small>Скачать в</small><b>RuStore</b></span>
       </a>
       <a class="btn-ghost" href="#library">Посмотреть библиотеку</a>
     </div>
-    <div class="dl-note"><b>30.0 МБ</b> · APK · версия 1.5.6 · Android 5.1 и новее · без рекламы и трекеров</div>
+    <div class="dl-note"><b>Бесплатно</b> · 32.3 МБ · версия 1.5.9 · Android 5.1 и новее · без рекламы и трекеров</div>
     <div class="chip-row">
-      <span class="chip"><b>102</b> книг встроено</span>
-      <span class="chip"><b>75 449</b> страниц</span>
+      <span class="chip"><b>103</b> книг встроено</span>
+      <span class="chip"><b>75 798</b> страниц</span>
       <span class="chip">EPUB · FB2 · PDF · TXT</span>
       <span class="chip">4 темы чтения</span>
     </div>
   </div>
   <figure class="phone">
-    <img src="assets/shots/home.jpg" width="306" height="664" alt="Главный экран WayBooks: полки книг и жанры" loading="eager" />
+    <img src="assets/shots/home.jpg" width="310" height="551" alt="Главный экран WayBooks: период чтения, «продолжить чтение» и книжная полка" loading="eager" />
   </figure>
 </section>
 
@@ -308,35 +312,35 @@ footer .wordmark{font-size:17px}
 <section class="wrap section" id="library">
   <div class="section-head">
     <h2>Библиотека</h2>
-    <p>Три жанра, 11 подкатегорий, от русской и вайнахской классики до шедевров зарубежной литературы.</p>
+    <p>Три жанра, 9 подкатегорий, от русской и вайнахской классики до шедевров зарубежной литературы.</p>
   </div>
   <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
   <div class="stats">
-    <div class="stat"><div class="n">102</div><div class="l">книг встроено</div></div>
-    <div class="stat"><div class="n">75 449</div><div class="l">страниц</div></div>
-    <div class="stat"><div class="n">3 314</div><div class="l">разделов и глав</div></div>
+    <div class="stat"><div class="n">103</div><div class="l">книг встроено</div></div>
+    <div class="stat"><div class="n">75 798</div><div class="l">страниц</div></div>
+    <div class="stat"><div class="n">3 357</div><div class="l">разделов и глав</div></div>
     <div class="stat"><div class="n">3</div><div class="l">жанра</div></div>
   </div>
-  <div class="chip-row" style="margin-top:22px"><span class="chip"><b>28</b> · Вайнахская литература</span> <span class="chip"><b>62</b> · Русская литература</span> <span class="chip"><b>25</b> · Зарубежная литература</span></div>
+  <div class="chip-row" style="margin-top:22px"><span class="chip"><b>18</b> · Вайнахская литература</span> <span class="chip"><b>25</b> · Зарубежная литература</span> <span class="chip"><b>60</b> · Русская литература</span></div>
   <div class="shelf">
-    <img src="assets/covers/cc-arbi-mamakaev-gory.jpg" alt="Обложка «В горах Чечни (Нохчийн лаьмнашкахь)»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/cc-vyshe-gor.jpg" alt="Обложка «Выше гор»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/cc-derevyannye-kukly.jpg" alt="Обложка «Деревянные куклы»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-bazorkin.jpg" alt="Обложка «Из тьмы веков»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-skazki-1965.jpg" alt="Обложка «Чеченские и ингушские народные сказки (1965)»" width="132" height="198" decoding="async" />
     <img src="assets/covers/cc-dolgaya-doroga.jpg" alt="Обложка «Долгая дорога в ночи»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/cc-doroga-v-selo.jpg" alt="Обложка «Дорога, спускающаяся в село»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/cc-levndash.jpg" alt="Обложка «Дух вайнахов: предания и легенды»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/rp-karenin.jpg" alt="Обложка «Анна Каренина»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/rp-asya.jpg" alt="Обложка «Ася»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/rp-ashik-kerib.jpg" alt="Обложка «Ашик-Кериб»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/rp-bednaya-liza.jpg" alt="Обложка «Бедная Лиза»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/rp-belaya-gvardiya.jpg" alt="Обложка «Белая гвардия»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/rp-belye-nochi.jpg" alt="Обложка «Белые ночи»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/fl-white-fang.jpg" alt="Обложка «Белый Клык»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/fl-war-of-worlds.jpg" alt="Обложка «Война миров»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/fl-around-world.jpg" alt="Обложка «Вокруг света за 80 дней»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-struny-vremeni.jpg" alt="Обложка «Струны времени»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-odna-oshibka.jpg" alt="Обложка «Одна ошибка»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/cc-vyshe-gor.jpg" alt="Обложка «Выше гор»" width="132" height="198" decoding="async" />
     <img src="assets/covers/fl-monte-cristo.jpg" alt="Обложка «Граф Монте-Кристо»" width="132" height="198" decoding="async" />
-    <img src="assets/covers/fl-twenty-thousand-leagues.jpg" alt="Обложка «Двадцать тысяч льё под водой»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/fl-three-musketeers.jpg" alt="Обложка «Три мушкетёра»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/fl-little-prince.jpg" alt="Обложка «Маленький принц»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/fl-sherlock-holmes.jpg" alt="Обложка «Приключения Шерлока Холмса»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/fl-baskervilles.jpg" alt="Обложка «Собака Баскервилей»" width="132" height="198" decoding="async" />
     <img src="assets/covers/fl-dracula.jpg" alt="Обложка «Дракула»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-gore-ot-uma.jpg" alt="Обложка «Горе от ума»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-granatovy.jpg" alt="Обложка «Гранатовый браслет»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-poedinok.jpg" alt="Обложка «Поединок»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-groza.jpg" alt="Обложка «Гроза»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-dubrovskij.jpg" alt="Обложка «Дубровский»" width="132" height="198" decoding="async" />
+    <img src="assets/covers/rp-onegin.jpg" alt="Обложка «Евгений Онегин»" width="132" height="198" decoding="async" />
   </div>
   <p class="dl-note" style="margin-top:4px">Обложки на этой полке — настоящие, из приложения. Их рисует сборщик библиотеки, поэтому они не кончаются там, где у магазина закончились превью.</p>
 </section>
@@ -344,26 +348,27 @@ footer .wordmark{font-size:17px}
 <section class="wrap section" id="install">
   <div class="section-head">
     <h2>Как установить</h2>
-    <p>Приложение не из Google Play: ставится одним файлом за минуту.</p>
+    <p>Приложение живёт в RuStore: оттуда ставится и оттуда же обновляется.</p>
   </div>
   <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
   <div class="steps">
-    <div class="step"><div class="num">1</div><h3>Скачайте файл</h3><p>Нажмите «Скачать на Android» — файл <code>WayBooks-1.5.6.apk</code> ляжет в папку «Загрузки».</p></div>
-    <div class="step"><div class="num">2</div><h3>Разрешите установку</h3><p>При первом запуске система спросит разрешение на приложения из «неизвестных источников» — подтвердите для браузера или «Файлов».</p></div>
-    <div class="step"><div class="num">3</div><h3>Откройте и читайте</h3><p>Библиотека загрузится при первом старте: 102 книги, офлайн, без регистрации и аккаунта.</p></div>
+    <div class="step"><div class="num">1</div><h3>Откройте страницу магазина</h3><p>Кнопка выше ведёт в <a href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener">WayBooks в RuStore</a>. Там же приложение находится поиском по «WayBooks».</p></div>
+    <div class="step"><div class="num">2</div><h3>Нажмите «Установить»</h3><p>Магазин скачает приложение сам — разрешений на «неизвестные источники» и предупреждений о файле из сторонней раздачи не будет.</p></div>
+    <div class="step"><div class="num">3</div><h3>Откройте и читайте</h3><p>Библиотека соберётся при первом старте: 103 книг, офлайн, без регистрации и аккаунта.</p></div>
   </div>
-  <div class="warn"><b>Подпись.</b> APK подписан ключом разработчика, а не магазином, поэтому Android покажет предупреждение — это нормальный путь для установки вне Play. Обновления ставятся поверх: версия и подпись те же — данные и прогресс сохраняются.</div>
+  <div class="warn"><b>Обновления.</b> RuStore сам подтягивает новые версии поверх установленной, а база приложения остаётся на месте — прогресс, закладки и заметки не пропадают. Прямых ссылок на APK на сайте больше нет: единственный путь установки — магазин, и он же проверяет подпись.</div>
 </section>
 
 <section class="wrap section" id="faq">
   <div class="section-head"><h2>Вопросы</h2><p>Коротко о том, что спрашивают чаще всего.</p></div>
   <div class="ornament"><span class="line"></span><span class="glyph">◆</span><span class="line"></span></div>
   <div class="faq">
-    <details><summary>Нужен ли интернет хотя бы раз?</summary><p>Нужен, чтобы скачать APK. Дальше приложение не делает ни одного запроса: тексты, обложки и настройки лежат внутри. Проверено — во время чтения наружу не уходит ничего.</p></details>
+    <details><summary>Нужен ли интернет хотя бы раз?</summary><p>Нужен, чтобы один раз скачать приложение из RuStore. Дальше оно не делает ни одного запроса: тексты, обложки и настройки лежат внутри. Проверено — во время чтения наружу не уходит ничего.</p></details>
     <details><summary>Книги правда полные?</summary><p>Да. Встроенная библиотека собирается из текстов, а не из описаний: у каждого произведения есть все главы, а издательский аппарат — примечания, послесловия, колонтитулы, списки литературы — вырезается. Если текст приходит битым (плохая оцифровка, дубль другой книги, список уроков вместо текста), сборщик такую книгу просто не выпускает.</p></details>
-    <details><summary>Мои закладки и прогресс не пропадут при обновлении?</summary><p>Нет. Обновление ставится поверх тем же ключом, база приложения остаётся на месте. Если в новой сборке поменялся текст книги, она перечитывается по контрольной сумме, а место чтения сохраняется там, где позволяет разбивка.</p></details>
+    <details><summary>Мои закладки и прогресс не пропадут при обновлении?</summary><p>Нет. RuStore ставит новую версию поверх той же подписью, база приложения остаётся на месте. Если в новой сборке поменялся текст книги, она перечитывается по контрольной сумме, а место чтения сохраняется там, где позволяет разбивка.</p></details>
+    <details><summary>Почему скачать можно только через RuStore?</summary><p>Раньше APK лежал на сайте, но это лишние шаги для читателя: файл надо ещё разрешить поставить, а Android пугает предупреждением о неизвестном источнике. Магазин проверяет подпись, ставит приложение как обычное и сам приносит обновления — поэтому раздачу файлов мы убрали.</p></details>
     <details><summary>Можно ли читать свои файлы?</summary><p>Можно: EPUB, FB2, PDF и обычный TXT добавляются прямо в приложении, попадают на полку «Добавленные книги» и читаются так же, как встроенные — с оглавлением, темой и сохранением позиции.</p></details>
-    <details><summary>Сколько места это занимает?</summary><p>APK весит 30 МБ, и почти весь объём — тексты и обложки библиотеки. После установки книги лежат в памяти приложения; на телефоне с 2 ГБ свободного места хватает с запасом.</p></details>
+    <details><summary>Сколько места это занимает?</summary><p>Установка весит 32.3 МБ, и почти весь объём — тексты и обложки библиотеки. После установки книги лежат в памяти приложения; на телефоне с 2 ГБ свободного места хватает с запасом.</p></details>
     <details><summary>Есть ли синхронизация между устройствами?</summary><p>Нет, и это осознанно: читалка офлайн, без аккаунтов и облаков. Свои файлы можно перенести вручную, встроенная библиотека есть в каждой копии приложения.</p></details>
   </div>
 </section>
@@ -371,12 +376,12 @@ footer .wordmark{font-size:17px}
 <section class="wrap section">
   <div class="final">
     <h2>Положите библиотеку в карман</h2>
-    <p>Один файл&nbsp;— и в телефоне 102 книги, которые открываются где угодно, даже без сети.</p>
-    <a class="btn-dl" href="download/WayBooks-1.5.6.apk" download>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
-      Скачать на Android
+    <p>Одно нажатие в RuStore&nbsp;— и в телефоне 103 книг, которые открываются где угодно, даже без сети.</p>
+    <a class="btn-store" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener">
+      <span class="bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8h13l-1.2 11.5a1.6 1.6 0 01-1.6 1.5H8.3a1.6 1.6 0 01-1.6-1.5z"/><path d="M9 8a3 3 0 016 0"/></svg></span>
+      <span class="txt"><small>Скачать в</small><b>RuStore</b></span>
     </a>
-    <div class="dl-note" style="text-align:center;margin-top:16px">30.0 МБ · версия 1.5.6 · Android 5.1+</div>
+    <div class="dl-note" style="text-align:center;margin-top:16px">Бесплатно · 32.3 МБ · версия 1.5.9 · Android 5.1+</div>
   </div>
 </section>
 </main>
@@ -389,8 +394,8 @@ footer .wordmark{font-size:17px}
       <div class="tagline">вай библиотека</div>
     </div>
     <div style="margin-left:auto;text-align:right">
-      Офлайн-читалка для Android · 102 книги встроено<br />
-      <a href="download/WayBooks-1.5.6.apk" download style="color:var(--accent-2)">Скачать APK</a>
+      Офлайн-читалка для Android · 103 книг встроено<br />
+      <a href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" style="color:var(--accent-2)">Страница в RuStore</a>
     </div>
   </div>
 </footer>
