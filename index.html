@@ -76,8 +76,73 @@ img{max-width:100%;display:block}
 .top-nav a:hover{color:var(--text);background:var(--card)}
 @media (max-width:980px){.top-nav{display:none}}
 
-/* ——— значок магазина: официальная эмблема RuStore на светлой плашке
-   (лого напечатано тёмным — на тёмном фоне оно не читается, поэтому плашка светлая) */
+/* ——— Единые премиальные кнопки загрузки (RuStore & iOS Web-App) ——— */
+.app-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.app-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  height: 52px;
+  padding: 0 22px 0 16px;
+  min-width: 205px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #201f29 0%, #131218 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-decoration: none;
+  line-height: 1.15;
+  cursor: pointer;
+  transition: transform .24s var(--ease), box-shadow .24s var(--ease), border-color .24s var(--ease), background .24s var(--ease);
+}
+.app-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(217, 196, 163, 0.55);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(217, 196, 163, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+.app-btn:active {
+  transform: translateY(0);
+}
+.app-btn-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app-btn-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.app-btn-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.app-btn-sub {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 2px;
+}
+.app-btn-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.2px;
+}
+
+/* Старые стили для шапки/подвала */
 .store{
   display:inline-flex;align-items:center;gap:11px;padding:9px 18px 9px 11px;border-radius:999px;
   background:linear-gradient(180deg,#fff 0%,#eaeaf2 100%);color:#14141b;
@@ -90,26 +155,6 @@ img{max-width:100%;display:block}
 .store img{height:26px;width:auto;display:block}
 .store--sm{padding:7px 14px 7px 9px;box-shadow:0 8px 22px rgba(124,108,255,.32)}
 .store--sm img{height:19px}
-
-/* Кнопка для iOS / Web-App */
-.store-ios{
-  display:inline-flex;align-items:center;gap:11px;padding:7px 20px 7px 14px;border-radius:999px;
-  background:linear-gradient(180deg,#1c1b24 0%,#131218 100%);color:#fff;
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 12px 34px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.14);
-  transition:transform .26s var(--ease),box-shadow .26s var(--ease),border-color .26s var(--ease);
-  text-decoration:none;line-height:1.15;
-}
-.store-ios:hover{
-  transform:translateY(-2px);border-color:rgba(217,196,163,.5);
-  box-shadow:0 18px 42px rgba(0,0,0,.55), 0 0 24px rgba(217,196,163,.18), inset 0 1px 0 rgba(255,255,255,.24);
-}
-.store-ios:active{transform:translateY(0)}
-.store-ios svg{width:22px;height:22px;fill:#fff;flex-shrink:0}
-.store-ios-col{display:flex;flex-direction:column;text-align:left}
-.store-ios-sub{font-size:9.5px;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.62);font-weight:500}
-.store-ios-title{font-size:14px;font-weight:600;color:#fff;letter-spacing:-.1px}
-.btn-group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 
 /* ——— герой */
 .hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:56px;align-items:center;padding-block:66px 58px}
@@ -303,6 +348,8 @@ footer .wordmark{font-size:17px}
   .cta-row{flex-direction:column;align-items:stretch}
   .store,.btn-ghost{justify-content:center}
   .hero{padding-block:34px 34px}
+  .app-btn-group{flex-direction:column;align-items:stretch;width:100%;gap:10px}
+  .app-btn{width:100%;min-width:0;justify-content:center}
 }
 
 /* появление при прокрутке: класс вешает только скрипт, поэтому без JS контент остаётся видимым */
@@ -344,17 +391,30 @@ footer .wordmark{font-size:17px}
     <span class="eyebrow"><i></i>Офлайн-читалка для Android & iOS</span>
     <h1>Книги&nbsp;— с&nbsp;собой.<br /><em>Интернет не&nbsp;нужен.</em></h1>
     <p class="lede">WayBooks — читалка без подписки, без облака и без рекламы: 103 полных текста уже лежат внутри приложения, а свои книги можно докинуть файлами. Всё работает в самолёте, в метро и в горах.</p>
-    <div class="cta-row">
-      <a class="store" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" aria-label="Скачать WayBooks в RuStore">
-        <img src="assets/rustore-lockup.svg" alt="Скачать в RuStore" width="104" height="26" />
+    <div class="cta-row app-btn-group">
+      <a class="app-btn" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" aria-label="Скачать WayBooks в RuStore">
+        <span class="app-btn-icon">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#005BFE"/>
+            <path d="M18.5 19.72c-.86-.21-1.46-.98-1.46-1.87V7.43c0-1 .95-1.74 1.93-1.5l6.2 1.55c.86.22 1.47.99 1.47 1.87v10.42c0 1.01-.95 1.74-1.93 1.5l-6.21-1.55Z" fill="white"/>
+            <path d="M6.83 24.52c-.86-.22-1.46-.99-1.46-1.87V12.23c0-1 .95-1.74 1.93-1.5l6.2 1.55c.86.22 1.47.99 1.47 1.87v10.42c0 1.01-.95 1.74-1.93 1.5l-6.21-1.55Z" fill="white"/>
+            <path d="M12.67 22.12c-.86-.21-1.47-.98-1.47-1.87V9.83c0-1.01.95-1.75 1.93-1.5l6.2 1.55c.86.21 1.47.98 1.47 1.87v10.42c0 1.01-.95 1.74-1.93 1.5l-6.2-1.55Z" fill="white"/>
+          </svg>
+        </span>
+        <span class="app-btn-text">
+          <span class="app-btn-sub">Для Android</span>
+          <span class="app-btn-title">RuStore</span>
+        </span>
       </a>
-      <a class="store-ios" href="./app/" aria-label="Открыть веб-приложение WayBooks для iPhone и iPad">
-        <svg viewBox="0 0 170 170" aria-hidden="true">
-          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.98-6.19-9.5-11.06-20.2-14.61-32.09-3.55-11.89-5.33-22.95-5.33-33.19 0-14.43 3.65-26.68 10.95-36.75 7.3-10.07 16.5-15.22 27.6-15.46 4.9.11 10.37 1.48 16.42 4.11 6.05 2.63 10.03 4.02 11.95 4.17 1.93-.15 6.08-1.57 12.46-4.27 6.38-2.7 11.92-4.02 16.63-3.96 12.44.64 22.38 5.43 29.83 14.37-10.9 6.58-16.2 15.77-15.9 27.56.29 9.38 4.01 17.2 11.16 23.46 7.15 6.26 15.54 9.77 25.17 10.53-2.07 6.44-4.51 13.2-7.32 20.28zm-34.62-113.88c0 7.1-2.67 13.83-8.01 20.19-5.34 6.36-12.02 10.42-20.04 12.18-.32-1.74-.48-3.4-.48-4.98 0-6.9 2.76-13.68 8.28-20.34 5.52-6.66 12.28-10.74 20.25-12.24v5.19z"/>
-        </svg>
-        <span class="store-ios-col">
-          <span class="store-ios-sub">Для iPhone & iPad</span>
-          <span class="store-ios-title">Веб-приложение</span>
+      <a class="app-btn" href="./app/" aria-label="Открыть веб-приложение WayBooks для iPhone и iPad">
+        <span class="app-btn-icon">
+          <svg viewBox="0 0 170 170" fill="#ffffff" aria-hidden="true">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.98-6.19-9.5-11.06-20.2-14.61-32.09-3.55-11.89-5.33-22.95-5.33-33.19 0-14.43 3.65-26.68 10.95-36.75 7.3-10.07 16.5-15.22 27.6-15.46 4.9.11 10.37 1.48 16.42 4.11 6.05 2.63 10.03 4.02 11.95 4.17 1.93-.15 6.08-1.57 12.46-4.27 6.38-2.7 11.92-4.02 16.63-3.96 12.44.64 22.38 5.43 29.83 14.37-10.9 6.58-16.2 15.77-15.9 27.56.29 9.38 4.01 17.2 11.16 23.46 7.15 6.26 15.54 9.77 25.17 10.53-2.07 6.44-4.51 13.2-7.32 20.28zm-34.62-113.88c0 7.1-2.67 13.83-8.01 20.19-5.34 6.36-12.02 10.42-20.04 12.18-.32-1.74-.48-3.4-.48-4.98 0-6.9 2.76-13.68 8.28-20.34 5.52-6.66 12.28-10.74 20.25-12.24v5.19z"/>
+          </svg>
+        </span>
+        <span class="app-btn-text">
+          <span class="app-btn-sub">Для iPhone & iPad</span>
+          <span class="app-btn-title">Веб-приложение</span>
         </span>
       </a>
       <a class="btn-ghost" href="#library">Библиотека</a>
@@ -494,17 +554,30 @@ footer .wordmark{font-size:17px}
     <span class="kicker">Итог</span>
     <h2>Положите библиотеку в карман</h2>
     <p>Одно нажатие в RuStore&nbsp;— и в телефоне 103 книг, которые открываются где угодно, даже без сети.</p>
-    <div class="btn-group" style="justify-content:center">
-      <a class="store" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" aria-label="Скачать WayBooks в RuStore">
-        <img src="assets/rustore-lockup.svg" alt="Скачать в RuStore" width="104" height="26" />
+    <div class="app-btn-group" style="justify-content:center">
+      <a class="app-btn" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" aria-label="Скачать WayBooks в RuStore">
+        <span class="app-btn-icon">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#005BFE"/>
+            <path d="M18.5 19.72c-.86-.21-1.46-.98-1.46-1.87V7.43c0-1 .95-1.74 1.93-1.5l6.2 1.55c.86.22 1.47.99 1.47 1.87v10.42c0 1.01-.95 1.74-1.93 1.5l-6.21-1.55Z" fill="white"/>
+            <path d="M6.83 24.52c-.86-.22-1.46-.99-1.46-1.87V12.23c0-1 .95-1.74 1.93-1.5l6.2 1.55c.86.22 1.47.99 1.47 1.87v10.42c0 1.01-.95 1.74-1.93 1.5l-6.21-1.55Z" fill="white"/>
+            <path d="M12.67 22.12c-.86-.21-1.47-.98-1.47-1.87V9.83c0-1.01.95-1.75 1.93-1.5l6.2 1.55c.86.21 1.47.98 1.47 1.87v10.42c0 1.01-.95 1.74-1.93 1.5l-6.2-1.55Z" fill="white"/>
+          </svg>
+        </span>
+        <span class="app-btn-text">
+          <span class="app-btn-sub">Для Android</span>
+          <span class="app-btn-title">RuStore</span>
+        </span>
       </a>
-      <a class="store-ios" href="./app/" aria-label="Открыть веб-приложение WayBooks для iPhone и iPad">
-        <svg viewBox="0 0 170 170" aria-hidden="true">
-          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.98-6.19-9.5-11.06-20.2-14.61-32.09-3.55-11.89-5.33-22.95-5.33-33.19 0-14.43 3.65-26.68 10.95-36.75 7.3-10.07 16.5-15.22 27.6-15.46 4.9.11 10.37 1.48 16.42 4.11 6.05 2.63 10.03 4.02 11.95 4.17 1.93-.15 6.08-1.57 12.46-4.27 6.38-2.7 11.92-4.02 16.63-3.96 12.44.64 22.38 5.43 29.83 14.37-10.9 6.58-16.2 15.77-15.9 27.56.29 9.38 4.01 17.2 11.16 23.46 7.15 6.26 15.54 9.77 25.17 10.53-2.07 6.44-4.51 13.2-7.32 20.28zm-34.62-113.88c0 7.1-2.67 13.83-8.01 20.19-5.34 6.36-12.02 10.42-20.04 12.18-.32-1.74-.48-3.4-.48-4.98 0-6.9 2.76-13.68 8.28-20.34 5.52-6.66 12.28-10.74 20.25-12.24v5.19z"/>
-        </svg>
-        <span class="store-ios-col">
-          <span class="store-ios-sub">Для iPhone & iPad</span>
-          <span class="store-ios-title">Веб-приложение</span>
+      <a class="app-btn" href="./app/" aria-label="Открыть веб-приложение WayBooks для iPhone и iPad">
+        <span class="app-btn-icon">
+          <svg viewBox="0 0 170 170" fill="#ffffff" aria-hidden="true">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.98-6.19-9.5-11.06-20.2-14.61-32.09-3.55-11.89-5.33-22.95-5.33-33.19 0-14.43 3.65-26.68 10.95-36.75 7.3-10.07 16.5-15.22 27.6-15.46 4.9.11 10.37 1.48 16.42 4.11 6.05 2.63 10.03 4.02 11.95 4.17 1.93-.15 6.08-1.57 12.46-4.27 6.38-2.7 11.92-4.02 16.63-3.96 12.44.64 22.38 5.43 29.83 14.37-10.9 6.58-16.2 15.77-15.9 27.56.29 9.38 4.01 17.2 11.16 23.46 7.15 6.26 15.54 9.77 25.17 10.53-2.07 6.44-4.51 13.2-7.32 20.28zm-34.62-113.88c0 7.1-2.67 13.83-8.01 20.19-5.34 6.36-12.02 10.42-20.04 12.18-.32-1.74-.48-3.4-.48-4.98 0-6.9 2.76-13.68 8.28-20.34 5.52-6.66 12.28-10.74 20.25-12.24v5.19z"/>
+          </svg>
+        </span>
+        <span class="app-btn-text">
+          <span class="app-btn-sub">Для iPhone & iPad</span>
+          <span class="app-btn-title">Веб-приложение</span>
         </span>
       </a>
     </div>
