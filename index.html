@@ -91,6 +91,26 @@ img{max-width:100%;display:block}
 .store--sm{padding:7px 14px 7px 9px;box-shadow:0 8px 22px rgba(124,108,255,.32)}
 .store--sm img{height:19px}
 
+/* Кнопка для iOS / Web-App */
+.store-ios{
+  display:inline-flex;align-items:center;gap:11px;padding:7px 20px 7px 14px;border-radius:999px;
+  background:linear-gradient(180deg,#1c1b24 0%,#131218 100%);color:#fff;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 12px 34px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.14);
+  transition:transform .26s var(--ease),box-shadow .26s var(--ease),border-color .26s var(--ease);
+  text-decoration:none;line-height:1.15;
+}
+.store-ios:hover{
+  transform:translateY(-2px);border-color:rgba(217,196,163,.5);
+  box-shadow:0 18px 42px rgba(0,0,0,.55), 0 0 24px rgba(217,196,163,.18), inset 0 1px 0 rgba(255,255,255,.24);
+}
+.store-ios:active{transform:translateY(0)}
+.store-ios svg{width:22px;height:22px;fill:#fff;flex-shrink:0}
+.store-ios-col{display:flex;flex-direction:column;text-align:left}
+.store-ios-sub{font-size:9.5px;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.62);font-weight:500}
+.store-ios-title{font-size:14px;font-weight:600;color:#fff;letter-spacing:-.1px}
+.btn-group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+
 /* ——— герой */
 .hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:56px;align-items:center;padding-block:66px 58px}
 .eyebrow{
@@ -321,14 +341,23 @@ footer .wordmark{font-size:17px}
 <main id="top">
 <section class="wrap hero">
   <div>
-    <span class="eyebrow"><i></i>Офлайн-читалка для Android</span>
+    <span class="eyebrow"><i></i>Офлайн-читалка для Android & iOS</span>
     <h1>Книги&nbsp;— с&nbsp;собой.<br /><em>Интернет не&nbsp;нужен.</em></h1>
     <p class="lede">WayBooks — читалка без подписки, без облака и без рекламы: 103 полных текста уже лежат внутри приложения, а свои книги можно докинуть файлами. Всё работает в самолёте, в метро и в горах.</p>
     <div class="cta-row">
       <a class="store" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" aria-label="Скачать WayBooks в RuStore">
         <img src="assets/rustore-lockup.svg" alt="Скачать в RuStore" width="104" height="26" />
       </a>
-      <a class="btn-ghost" href="#library">Посмотреть библиотеку</a>
+      <a class="store-ios" href="./app/" aria-label="Открыть веб-приложение WayBooks для iPhone и iPad">
+        <svg viewBox="0 0 170 170" aria-hidden="true">
+          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.98-6.19-9.5-11.06-20.2-14.61-32.09-3.55-11.89-5.33-22.95-5.33-33.19 0-14.43 3.65-26.68 10.95-36.75 7.3-10.07 16.5-15.22 27.6-15.46 4.9.11 10.37 1.48 16.42 4.11 6.05 2.63 10.03 4.02 11.95 4.17 1.93-.15 6.08-1.57 12.46-4.27 6.38-2.7 11.92-4.02 16.63-3.96 12.44.64 22.38 5.43 29.83 14.37-10.9 6.58-16.2 15.77-15.9 27.56.29 9.38 4.01 17.2 11.16 23.46 7.15 6.26 15.54 9.77 25.17 10.53-2.07 6.44-4.51 13.2-7.32 20.28zm-34.62-113.88c0 7.1-2.67 13.83-8.01 20.19-5.34 6.36-12.02 10.42-20.04 12.18-.32-1.74-.48-3.4-.48-4.98 0-6.9 2.76-13.68 8.28-20.34 5.52-6.66 12.28-10.74 20.25-12.24v5.19z"/>
+        </svg>
+        <span class="store-ios-col">
+          <span class="store-ios-sub">Для iPhone & iPad</span>
+          <span class="store-ios-title">Веб-приложение</span>
+        </span>
+      </a>
+      <a class="btn-ghost" href="#library">Библиотека</a>
     </div>
     <div class="dl-note"><b>Бесплатно</b> · 42 МБ · версия 1.7.6 · Android 5.1 и новее · без рекламы и трекеров</div>
     <div class="chip-row">
@@ -465,10 +494,21 @@ footer .wordmark{font-size:17px}
     <span class="kicker">Итог</span>
     <h2>Положите библиотеку в карман</h2>
     <p>Одно нажатие в RuStore&nbsp;— и в телефоне 103 книг, которые открываются где угодно, даже без сети.</p>
-    <a class="store" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" aria-label="Скачать WayBooks в RuStore">
-      <img src="assets/rustore-lockup.svg" alt="Скачать в RuStore" width="104" height="26" />
-    </a>
-    <div class="dl-note" style="text-align:center;margin-top:18px">Бесплатно · 42 МБ · версия 1.7.6 · Android 5.1+</div>
+    <div class="btn-group" style="justify-content:center">
+      <a class="store" href="https://www.rustore.ru/catalog/app/app.waybooks.reader" target="_blank" rel="noopener" aria-label="Скачать WayBooks в RuStore">
+        <img src="assets/rustore-lockup.svg" alt="Скачать в RuStore" width="104" height="26" />
+      </a>
+      <a class="store-ios" href="./app/" aria-label="Открыть веб-приложение WayBooks для iPhone и iPad">
+        <svg viewBox="0 0 170 170" aria-hidden="true">
+          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.98-6.19-9.5-11.06-20.2-14.61-32.09-3.55-11.89-5.33-22.95-5.33-33.19 0-14.43 3.65-26.68 10.95-36.75 7.3-10.07 16.5-15.22 27.6-15.46 4.9.11 10.37 1.48 16.42 4.11 6.05 2.63 10.03 4.02 11.95 4.17 1.93-.15 6.08-1.57 12.46-4.27 6.38-2.7 11.92-4.02 16.63-3.96 12.44.64 22.38 5.43 29.83 14.37-10.9 6.58-16.2 15.77-15.9 27.56.29 9.38 4.01 17.2 11.16 23.46 7.15 6.26 15.54 9.77 25.17 10.53-2.07 6.44-4.51 13.2-7.32 20.28zm-34.62-113.88c0 7.1-2.67 13.83-8.01 20.19-5.34 6.36-12.02 10.42-20.04 12.18-.32-1.74-.48-3.4-.48-4.98 0-6.9 2.76-13.68 8.28-20.34 5.52-6.66 12.28-10.74 20.25-12.24v5.19z"/>
+        </svg>
+        <span class="store-ios-col">
+          <span class="store-ios-sub">Для iPhone & iPad</span>
+          <span class="store-ios-title">Веб-приложение</span>
+        </span>
+      </a>
+    </div>
+    <div class="dl-note" style="text-align:center;margin-top:18px">Бесплатно · Android (RuStore) и iOS (веб-приложение PWA) · без рекламы</div>
   </div>
 </section>
 </main>
